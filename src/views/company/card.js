@@ -51,7 +51,7 @@ export default function PageCard() {
 			<Typography className={classes.typography_title} noWrap >
 				安卓开发工程师
 			</Typography >
-			 <Typography  className={classes.*/}>
+			 <Typography  className={classes.typography_money}>
 			 	50k-100k
 			 </Typography >
 			  <Typography  className={classes.fontSmall} color="textSecondary" gutterBottom>
@@ -69,7 +69,7 @@ export default function PageCard() {
 			 <Typography gutterBottom>
 			 <a href="https://www.baidu.com" className={classes.a_company}>
 				博库网
-			</a>	
+			</a>
 			 </Typography >
 			 <Typography className={classes.fontSmall} color="textSecondary" noWrap >
 			 	福利多多福利多多福利多福利多多福利多多福利多福利多多福利多多福利多福利多多福利多多福利多

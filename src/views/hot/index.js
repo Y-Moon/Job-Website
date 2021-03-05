@@ -25,15 +25,15 @@ const HotView = () => {
   return (
     <Page
       className={classes.root}
-      title="Hot Job"
+      title='Hot Job'
     >
-      <Container maxWidth="lg">
-	  <Typography component="div">
-		<Box textAlign="center" fontSize="h1.fontSize" m={2}>
-		这里是轮播图
-		</Box>
-	  </Typography>
-        <CardList/>
+      <Container maxWidth='lg'>
+        <Typography component='div'>
+          <Box textAlign='center' fontSize='h1.fontSize' m={2}>
+            这里是轮播图
+          </Box>
+        </Typography>
+        <CardList />
       </Container>
     </Page>
   );
