@@ -13,6 +13,8 @@ import RegisterView from 'src/views/auth/RegisterView';
 import SettingsView from 'src/views/settings/SettingsView';
 import HotView from 'src/views/hot';
 import CompanyView from 'src/views/company';
+import MyMessageView from 'src/views/me';
+import InboxView from 'src/views/inbox';
 
 const routes = [
   {
@@ -33,6 +35,8 @@ const routes = [
     children: [
       { path: 'hot', element: <HotView /> },
       { path: 'companyList', element: <CompanyView /> },
+      { path: 'my', element: <MyMessageView /> },
+      { path: 'inbox', element: <InboxView /> },
 	  { path: '*', element: <Navigate to="/404" /> }
     ]
   },
