@@ -128,7 +128,7 @@ const itemsUp = [
 ];
 const itemsDown=[
   {
-	href: '/findJob/hot',
+	href: '/findJob/inbox',
 	title: '收件箱'
   },
   {
