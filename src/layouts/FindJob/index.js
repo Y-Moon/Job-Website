@@ -129,14 +129,14 @@ const itemsUp = [
 const itemsDown=[
   {
 	href: '/findJob/hot',
-	title: '热门首页'
+	title: '收件箱'
   },
   {
   	href: '/findJob/hot',
   	title: '简历下载'
   },
   {
-  	href: '/findJob/hot',
+  	href: '/findJob/my',
   	title: '我'
   },
 	];
@@ -212,16 +212,14 @@ export default function MiniDrawer() {
         <Divider/>
 		<List>
 			{itemsDown.map((item,index) => (
-			  <ListItem button >
-			  <Button
-			    component={RouterLink}
-			    to={item.href}
+			  <ListItem button 
+			  component={RouterLink}
+			  to={item.href}
 			  >
 			    <ListItemIcon>
 			  	{iconsDown[index]}
 			    </ListItemIcon>
 			    <ListItemText primary={item.title} />
-			 </Button>
 			  </ListItem>
 			))}
 		</List>
