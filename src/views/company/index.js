@@ -1,10 +1,14 @@
 import React from 'react';
+import axios from 'axios';
 import Page from 'src/components/Page';
 import {
   makeStyles,
   Typography
 } from '@material-ui/core';
 import CardList from '../hot/cardLayout';
+import { NavLink } from 'react-router-dom';
+import './index.css';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.white,
@@ -18,7 +22,8 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: '40px'
   },
   tabItem: {
-    padding: '0 10px'
+    padding: '0 10px',
+    color: 'black'
   },
   tabItemActive: {
     background: 'skyblue'
@@ -41,20 +46,34 @@ const CompanyView = () => {
       items: ['不限', '移动互联网', '电商', '金融', '企业服务', '教育', '文娱|内容', '游戏', '消费生活', '硬件']
     }
   ];
+  let handleClick = (e) => {
+    let target = e.target;
+    if (target.tagName !== 'A') return;
+    let siblings = target.parentNode.children;
+    for (let i = 1; i < siblings.length; i++) {
+      siblings[i].classList.remove(classes.tabItemActive);
+    }
+    target.classList.add(classes.tabItemActive);
+    let id = +location.search.split('=')[1];
+    axios.get('url').then(r => {
+
+    });
+  };
   return (
     <Page
       className={classes.root}
       title='company list'
+      onClick={handleClick.bind(this)}
     >
       {headData.map((i, idx) => (
         <div key={idx} className={classes.tabItemContainer}>
           <b>{i.title}&nbsp;</b>
-          {i.items.map((i, idx2) => <span
-            className={[classes.tabItem, idx2 === 0 ? classes.tabItemActive : null].join(' ')}
-            key={idx2}>{i}</span>)}
+          {i.items.map((i, idx2) => <NavLink to={'/findJob/companyList?id=' + (idx + 1) + idx2}
+                                             className={[classes.tabItem, idx2 === 0 ? classes.tabItemActive : null].join(' ')}
+                                             key={idx2}>{i}</NavLink>)}
         </div>
       ))}
-      <CardList/>
+      <CardList />
     </Page>);
 };
 export default CompanyView;
