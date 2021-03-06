@@ -7,31 +7,47 @@ import {
 	Typography,
 	Box
 	} from '@material-ui/core';
+const useStyles = makeStyles((theme) => ({
+	root:{
+		width:"100%",
+		position: "absolute",
+		bottom:"0rpx",
+	},
+    boxStyle: {
+	    display: "flex",
+	    argin:theme.spacing(5),
+	    width:"300px",
+	
+    }
+}));
 export default function CustomizedTables() {
-  const classes = makeStyles();
+  const classes = useStyles();
   return (
     <Container component={Paper} >
 	  <Divider  />
-	  <Box textAlign="left" width="300px" m={1}>
+	  <Box className={classes.boxStyle}  >
 		  <Typography variant="h4" align="left">
 					企业服务
 		  </Typography>
+		  <br/>
 		  <Typography variant="h4"  align="left">
 					企业服务
 		  </Typography>
 	  </Box>
-	  <Box textAlign="left" width="300px" m={1}>
+	  <Box className={classes.boxStyle}   >
 		  <Typography variant="h4" align="center">
 					企业服务
 		  </Typography>
+		  <br/>
 		  <Typography variant="h4" align="center">
 					企业服务
 		  </Typography>
 	  </Box>
-	  <Box textAlign="left" width="300px" m={1}>
+	  <Box className={classes.boxStyle}>
 		  <Typography variant="h4" align="right">
 					企业服务
 		  </Typography>
+		  <br/>
 		  <Typography variant="h4" align="right">
 					企业服务
 		  </Typography>
