@@ -8,7 +8,6 @@ import {
 } from '@material-ui/core';
 import Page from 'src/components/Page';
 import CardList from './cardLayout.js';
-import LableList from './labelLayout.js';
 
 const useStyles = makeStyles((theme) => ({
   root: {

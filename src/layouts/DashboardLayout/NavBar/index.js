@@ -32,50 +32,30 @@ const user = {
 
 const items = [
   {
-    href: '/app/dashboard',
-    icon: BarChartIcon,
-    title: 'Dashboard'
-  },
-  {
     href: '/app/customers',
     icon: UsersIcon,
-    title: 'Customers'
+    title: '求职者'
   },
   {
     href: '/app/products',
     icon: ShoppingBagIcon,
-    title: 'Products'
+    title: '招聘链接'
   },
   {
     href: '/app/account',
     icon: UserIcon,
-    title: 'Account'
+    title: '企业信息修改'
   },
   {
     href: '/app/settings',
     icon: SettingsIcon,
-    title: 'Settings'
+    title: '企业账户管理'
   },
   
-  {
-    href: '/login',
-    icon: LockIcon,
-    title: 'Login'
-  },
-  {
-    href: '/register',
-    icon: UserPlusIcon,
-    title: 'Register'
-  },
   {
     href: '/404',
     icon: AlertCircleIcon,
     title: 'Error'
-  },
-  {
-    href: '/findJob/hot',
-    icon: WhatshotIcon,
-    title: 'Page'
   },
 ];
 

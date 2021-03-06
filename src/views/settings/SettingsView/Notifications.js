@@ -33,8 +33,7 @@ const Notifications = ({ className, ...rest }) => {
     >
       <Card>
         <CardHeader
-          subheader="Manage the notifications"
-          title="Notifications"
+          title="通知消息管理"
         />
         <Divider />
         <CardContent>
@@ -55,7 +54,7 @@ const Notifications = ({ className, ...rest }) => {
                 gutterBottom
                 variant="h6"
               >
-                Notifications
+                通知
               </Typography>
               <FormControlLabel
                 control={(
@@ -92,7 +91,7 @@ const Notifications = ({ className, ...rest }) => {
                 gutterBottom
                 variant="h6"
               >
-                Messages
+                消息
               </Typography>
               <FormControlLabel
                 control={(
@@ -123,7 +122,7 @@ const Notifications = ({ className, ...rest }) => {
             color="primary"
             variant="contained"
           >
-            Save
+            保存
           </Button>
         </Box>
       </Card>

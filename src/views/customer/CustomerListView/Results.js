@@ -94,19 +94,19 @@ const Results = ({ className, customers, ...rest }) => {
                   />
                 </TableCell>
                 <TableCell>
-                  Name
+                  名字
                 </TableCell>
                 <TableCell>
-                  Email
+                  邮箱
                 </TableCell>
                 <TableCell>
-                  Location
+                  家庭地址
                 </TableCell>
                 <TableCell>
-                  Phone
+                  手机号码
                 </TableCell>
                 <TableCell>
-                  Registration date
+                  申请日期
                 </TableCell>
               </TableRow>
             </TableHead>

@@ -23,7 +23,7 @@ const SettingsView = () => {
   return (
     <Page
       className={classes.root}
-      title="Settings"
+      title="企业账户设置"
     >
       <Container maxWidth="lg">
         <Notifications />

@@ -16,11 +16,10 @@ import {
 
 const user = {
   avatar: '/static/images/avatars/avatar_6.png',
-  city: 'Los Angeles',
-  country: 'USA',
-  jobTitle: 'Senior Developer',
-  name: 'Katarina Smith',
-  timezone: 'GTM-7'
+  city: '杭州',
+  country: '中国',
+  name: '阿里巴巴',
+  timezone: 'UTC+8'
 };
 
 const useStyles = makeStyles(() => ({
@@ -78,7 +77,7 @@ const Profile = ({ className, ...rest }) => {
           fullWidth
           variant="text"
         >
-          Upload picture
+          上传照片
         </Button>
       </CardActions>
     </Card>

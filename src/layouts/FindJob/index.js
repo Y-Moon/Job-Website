@@ -2,6 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { NavLink as RouterLink,Outlet } from 'react-router-dom';
+import BottomBar from '../../components/BottomBar'
 import {
 	Button,
 	Drawer,
@@ -175,7 +176,7 @@ export default function MiniDrawer() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            WM Recruiter Website
+            WM 招聘网
           </Typography>
         </Toolbar>
       </AppBar>
@@ -224,10 +225,12 @@ export default function MiniDrawer() {
 			))}
 		</List>
       </Drawer>
+	  
 	  <div className={classes.wrapper}>
 	    <div className={classes.contentContainer}>
 	      <div className={classes.content}>
 	        <Outlet />
+			<BottomBar/>
 	      </div>
 	    </div>
 	  </div>

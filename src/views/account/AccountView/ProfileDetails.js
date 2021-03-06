@@ -35,12 +35,12 @@ const useStyles = makeStyles(() => ({
 const ProfileDetails = ({ className, ...rest }) => {
   const classes = useStyles();
   const [values, setValues] = useState({
-    firstName: 'Katarina',
-    lastName: 'Smith',
-    email: 'demo@devias.io',
+    firstName: 'firstName',
+    lastName: 'lastName',
+    email: 'email@devias.io',
     phone: '',
     state: 'Alabama',
-    country: 'USA'
+    country: '中国'
   });
 
   const handleChange = (event) => {
@@ -76,7 +76,7 @@ const ProfileDetails = ({ className, ...rest }) => {
               <TextField
                 fullWidth
                 helperText="Please specify the first name"
-                label="First name"
+                label="姓"
                 name="firstName"
                 onChange={handleChange}
                 required
@@ -91,7 +91,7 @@ const ProfileDetails = ({ className, ...rest }) => {
             >
               <TextField
                 fullWidth
-                label="Last name"
+                label="名"
                 name="lastName"
                 onChange={handleChange}
                 required
@@ -106,7 +106,7 @@ const ProfileDetails = ({ className, ...rest }) => {
             >
               <TextField
                 fullWidth
-                label="Email Address"
+                label="邮箱"
                 name="email"
                 onChange={handleChange}
                 required
@@ -121,7 +121,7 @@ const ProfileDetails = ({ className, ...rest }) => {
             >
               <TextField
                 fullWidth
-                label="Phone Number"
+                label="责任人手机号码"
                 name="phone"
                 onChange={handleChange}
                 type="number"
@@ -182,7 +182,7 @@ const ProfileDetails = ({ className, ...rest }) => {
             color="primary"
             variant="contained"
           >
-            Save details
+            保存更改
           </Button>
         </Box>
       </Card>

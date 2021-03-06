@@ -26,6 +26,7 @@ const routes = [
       { path: 'dashboard', element: <DashboardView /> },
       { path: 'products', element: <ProductListView /> },
       { path: 'settings', element: <SettingsView /> },
+      { path: '/', element: <Navigate to="/app/customers" /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   },
@@ -37,6 +38,7 @@ const routes = [
       { path: 'companyList', element: <CompanyView /> },
       { path: 'my', element: <MyMessageView /> },
       { path: 'inbox', element: <InboxView /> },
+      { path: '/', element: <Navigate to="/findJob/hot" /> },
 	  { path: '*', element: <Navigate to="/404" /> }
     ]
   },

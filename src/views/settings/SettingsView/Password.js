@@ -37,14 +37,13 @@ const Password = ({ className, ...rest }) => {
     >
       <Card>
         <CardHeader
-          subheader="Update password"
-          title="Password"
+          title="密码管理"
         />
         <Divider />
         <CardContent>
           <TextField
             fullWidth
-            label="Password"
+            label="Old password"
             margin="normal"
             name="password"
             onChange={handleChange}
@@ -52,6 +51,16 @@ const Password = ({ className, ...rest }) => {
             value={values.password}
             variant="outlined"
           />
+		  <TextField
+		    fullWidth
+		    label="New password"
+		    margin="normal"
+		    name="confirm"
+		    onChange={handleChange}
+		    type="password"
+		    value={values.confirm}
+		    variant="outlined"
+		  />
           <TextField
             fullWidth
             label="Confirm password"
@@ -73,7 +82,7 @@ const Password = ({ className, ...rest }) => {
             color="primary"
             variant="contained"
           >
-            Update
+            更新
           </Button>
         </Box>
       </Card>

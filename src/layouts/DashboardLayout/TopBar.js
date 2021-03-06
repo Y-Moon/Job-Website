@@ -39,7 +39,7 @@ const TopBar = ({
       {...rest}
     >
       <Toolbar >
-        <RouterLink to="/app/dashboard">
+        <RouterLink to="/app/customers">
           <Logo />
         </RouterLink>
         <Box flexGrow={1} />

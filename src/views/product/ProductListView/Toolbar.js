@@ -36,42 +36,19 @@ const Toolbar = ({ className, ...rest }) => {
         justifyContent="flex-end"
       >
         <Button className={classes.importButton}>
-          Import
+          导入
         </Button>
         <Button className={classes.exportButton}>
-          Export
+          导出
         </Button>
         <Button
           color="primary"
           variant="contained"
         >
-          Add product
+          发布招聘信息
         </Button>
       </Box>
-      <Box mt={3}>
-        <Card>
-          <CardContent>
-            <Box maxWidth={500}>
-              <TextField
-                fullWidth
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SvgIcon
-                        fontSize="small"
-                        color="action"
-                      >
-                        <SearchIcon />
-                      </SvgIcon>
-                    </InputAdornment>
-                  )
-                }}
-                placeholder="Search product"
-                variant="outlined"
-              />
-            </Box>
-          </CardContent>
-        </Card>
+      <Box mt={7}>
       </Box>
     </div>
   );
