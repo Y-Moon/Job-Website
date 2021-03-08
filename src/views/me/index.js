@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { 
+import {
 	makeStyles,
 	Avatar,
 	Divider,
@@ -78,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
 		marginLeft:theme.spacing(5),
 		marginTop:theme.spacing(2),
 	},
-	
+
 }));
 
 export default function VerticalTabs() {
@@ -119,10 +119,10 @@ export default function VerticalTabs() {
 	  </Box>
 	  <br/>
 	  <Box textAlign="center" m={1}  >
-	  <Typography className={classes.typography} >
-		  此信息用于站内言职社区功能，不会同步修改简历
-	  </Typography>
-	          
+	  {/*<Typography className={classes.typography} >*/}
+		{/*  此信息用于站内言职社区功能，不会同步修改简历*/}
+	  {/*</Typography>*/}
+
 	  </Box>
     </TabPanel>
     <TabPanel value={value} index={1}>
@@ -157,9 +157,9 @@ export default function VerticalTabs() {
 	         提交
 		</Button>
 	  </Box>
-	   
+
     </TabPanel>
-	
+
     <TabPanel value={value} index={4}>
       待开发中
     </TabPanel>
