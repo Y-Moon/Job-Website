@@ -25,33 +25,7 @@ export default function CustomizedTables() {
   return (
     <Container component={Paper} >
 	  <Divider  />
-	  <Box className={classes.boxStyle}  >
-		  <Typography variant="h4" align="left">
-					企业服务
-		  </Typography>
-		  <br/>
-		  <Typography variant="h4"  align="left">
-					企业服务
-		  </Typography>
-	  </Box>
-	  <Box className={classes.boxStyle}   >
-		  <Typography variant="h4" align="center">
-					企业服务
-		  </Typography>
-		  <br/>
-		  <Typography variant="h4" align="center">
-					企业服务
-		  </Typography>
-	  </Box>
-	  <Box className={classes.boxStyle}>
-		  <Typography variant="h4" align="right">
-					企业服务
-		  </Typography>
-		  <br/>
-		  <Typography variant="h4" align="right">
-					企业服务
-		  </Typography>
-	  </Box>
+	  
     </Container>
   );
 }

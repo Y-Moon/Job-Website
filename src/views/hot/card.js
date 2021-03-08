@@ -62,17 +62,17 @@ export default function PageCard() {
 			      <Chip className={classes.chip_style} label="spring" size="small" variant="outline" />
 			      <Chip className={classes.chip_style} label="linux" size="small" variant="outline" />
 			      <Chip className={classes.chip_style} label="mysql" size="small" variant="outline" />
-			      <Chip className={classes.chip_style} label="mysql" size="small" variant="outline" />
+			      <Chip className={classes.chip_style} label="tcp" size="small" variant="outline" />
 			  </div>
 			  <Divider className={classes.hr_style} />
-		  	<Avatar className={classes.company_pic}>H</Avatar>
+		  	<Avatar className={classes.company_pic}>A</Avatar>
 			 <Typography gutterBottom>
 			 <a href="https://www.baidu.com" className={classes.a_company}>
-				博库网
+				alibaba
 			</a>	
 			 </Typography >
 			 <Typography className={classes.fontSmall} color="textSecondary" noWrap >
-			 	福利多多福利多多福利多福利多多福利多多福利多福利多多福利多多福利多福利多多福利多多福利多
+			 	5险一金/15薪/年底分红/年底出国7日游
 			 </Typography >
 		</CardContent>
     </Card >

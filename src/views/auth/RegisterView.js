@@ -76,14 +76,14 @@ const RegisterView = () => {
                     color="textPrimary"
                     variant="h2"
                   >
-                    Create new account
+                    创建一个普通账户
                   </Typography>
                   <Typography
                     color="textSecondary"
                     gutterBottom
                     variant="body2"
                   >
-                    Use your email to create new account
+                    使用邮箱进行注册
                   </Typography>
                 </Box>
                 <TextField
@@ -150,7 +150,7 @@ const RegisterView = () => {
                     color="textSecondary"
                     variant="body1"
                   >
-                    I have read the
+                    我已阅读
                     {' '}
                     <Link
                       color="primary"
@@ -159,7 +159,7 @@ const RegisterView = () => {
                       underline="always"
                       variant="h6"
                     >
-                      Terms and Conditions
+                      服务条款
                     </Link>
                   </Typography>
                 </Box>
@@ -177,21 +177,21 @@ const RegisterView = () => {
                     type="submit"
                     variant="contained"
                   >
-                    Sign up now
+                    登录
                   </Button>
                 </Box>
                 <Typography
                   color="textSecondary"
                   variant="body1"
                 >
-                  Have an account?
+                  是否有一个账户?
                   {' '}
                   <Link
                     component={RouterLink}
                     to="/login"
                     variant="h6"
                   >
-                    Sign in
+                    登录
                   </Link>
                 </Typography>
               </form>

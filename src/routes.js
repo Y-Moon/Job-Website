@@ -15,6 +15,7 @@ import HotView from 'src/views/hot';
 import CompanyView from 'src/views/company';
 import MyMessageView from 'src/views/me';
 import InboxView from 'src/views/inbox';
+import SchoolView from 'src/views/school';
 
 const routes = [
   {
@@ -38,6 +39,7 @@ const routes = [
       { path: 'companyList', element: <CompanyView /> },
       { path: 'my', element: <MyMessageView /> },
       { path: 'inbox', element: <InboxView /> },
+      { path: 'school', element: <SchoolView /> },
       { path: '/', element: <Navigate to="/findJob/hot" /> },
 	  { path: '*', element: <Navigate to="/404" /> }
     ]
