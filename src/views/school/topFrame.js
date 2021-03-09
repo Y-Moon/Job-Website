@@ -1,4 +1,4 @@
-import react from 'react';
+import React from 'react';
 import {
 	makeStyles,
 	Box,
@@ -13,9 +13,9 @@ const useStyles = makeStyles((theme) => ({
 	  display:"inline-block",
 	  position:"relative",
 	  overflow: "auto",
-	   top:50, 
-	   left:50, 
-	   width:300, 
+	   top:50,
+	   left:50,
+	   width:300,
 	   height:400,
 	   padding:theme.spacing(3),
 	    backgroundColor:"#55ff00",
@@ -24,10 +24,10 @@ const useStyles = makeStyles((theme) => ({
 	  display:"inline-block",
 	  position:"relative",
 	  overflow: "auto",
-	   top:50, 
-	   left:100, 
-	   width:400, 
-	   height:400, 
+	   top:50,
+	   left:100,
+	   width:400,
+	   height:400,
 	   backgroundColor:"#ff0000",
   }
 }));
@@ -42,7 +42,7 @@ const TopFrame=()=>{
 				<Box m={3} fontSize={15} display="inline" fontWeight="fontWeightLight">
 					java
 				</Box>
-				
+
 			</Card>
 			<Card className={classes.rightBox}>
 			</Card>

@@ -1,4 +1,4 @@
-import react from 'react';
+import React from 'react';
 import {
 	makeStyles,
 }from '@material-ui/core';
@@ -7,13 +7,13 @@ import TopFrame from './topFrame';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    
+
   }
 }));
 const SchoolView=()=>{
 	const classes=useStyles();
 	return(
-		<Page 
+		<Page
 		className={classes.root}
 		title='school'>
 			<TopFrame/>
