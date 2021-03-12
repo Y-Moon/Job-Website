@@ -107,8 +107,13 @@ const useStyles = makeStyles((theme) => ({
     flex: '1 1 auto',
     height: '100%',
     overflow: 'auto'
+<<<<<<< HEAD
   },
   
+=======
+  }
+
+>>>>>>> a486f68e5c42bea7825379ecd430c839fb8cc43c
 }));
 const itemsUp = [
   {
@@ -214,7 +219,7 @@ export default function MiniDrawer() {
         <Divider/>
 		<List>
 			{itemsDown.map((item,index) => (
-			  <ListItem button 
+			  <ListItem button
 			  component={RouterLink}
 			  to={item.href}
 			  >
@@ -226,7 +231,7 @@ export default function MiniDrawer() {
 			))}
 		</List>
       </Drawer>
-	  
+
 	  <div className={classes.wrapper}>
 	    <div className={classes.contentContainer}>
 	      <div className={classes.content}>

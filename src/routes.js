@@ -37,9 +37,6 @@ const routes = [
     children: [
       { path: 'hot', element: <HotView /> },
       { path: 'companyList', element: <CompanyView /> },
-      { path: 'companyList/:id', element: <CompanyView /> },
-      // { path: 'companyList/1/:id', element: <CompanyView /> },
-      // { path: 'companyList/2/:id', element: <CompanyView /> },
       { path: 'my', element: <MyMessageView /> },
       { path: 'inbox', element: <InboxView /> },
       { path: 'school', element: <SchoolView /> },

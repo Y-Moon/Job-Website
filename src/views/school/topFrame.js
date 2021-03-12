@@ -1,4 +1,4 @@
-import react from 'react';
+import React from 'react';
 import {
 	makeStyles,
 	Box,
@@ -21,26 +21,45 @@ const useStyles = makeStyles((theme) => ({
 	  position:"relative",
 	  padding:"10px",
 	  overflow: "auto",
+<<<<<<< HEAD
 	  width:300, 
 	  height:360,
 	  padding:theme.spacing(3),
 	  backgroundColor:"#ffffff",
+=======
+	   top:50,
+	   left:50,
+	   width:300,
+	   height:400,
+	   padding:theme.spacing(3),
+	    backgroundColor:"#55ff00",
+>>>>>>> a486f68e5c42bea7825379ecd430c839fb8cc43c
   },
   rightBox :{
 	  display:"inline-block",
 	  position:"relative",
 	  overflow: "auto",
+<<<<<<< HEAD
 	  left:30,
 	   width:720, 
 	   height:360, 
 	   backgroundColor:"#ffffff",
 	   border:"1px solid",
   },
+=======
+	   top:50,
+	   left:100,
+	   width:400,
+	   height:400,
+	   backgroundColor:"#ff0000",
+  }
+>>>>>>> a486f68e5c42bea7825379ecd430c839fb8cc43c
 }));
 const TopFrame=()=>{
 	const classes=useStyles();
 	return(
 		<Box className={classes.root}>
+<<<<<<< HEAD
 			<Paper   className={classes.leftBox}>
 				<List>
 				{JobData.map((object)=>(
@@ -69,6 +88,19 @@ const TopFrame=()=>{
 			<Box  className={classes.rightBox}>
 				<img src="./pic/AD.jpg" alt="广告"/>
 			</Box >
+=======
+			<Card  className={classes.leftBox}>
+				<Box fontSize={20} display="inline" fontWeight="fontWeightLight">
+					技术
+				</Box>
+				<Box m={3} fontSize={15} display="inline" fontWeight="fontWeightLight">
+					java
+				</Box>
+
+			</Card>
+			<Card className={classes.rightBox}>
+			</Card>
+>>>>>>> a486f68e5c42bea7825379ecd430c839fb8cc43c
 		</Box>
 	)
 }
