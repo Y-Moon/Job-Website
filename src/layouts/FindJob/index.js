@@ -16,7 +16,8 @@ import {
 	ListItemText,
 	IconButton,
 	ListItemIcon,
-	Container
+	Container,
+	Box
 } from '@material-ui/core';
 import{
 	ChevronLeft as ChevronLeftIcon,
@@ -106,7 +107,7 @@ const useStyles = makeStyles((theme) => ({
     flex: '1 1 auto',
     height: '100%',
     overflow: 'auto'
-  }
+  },
   
 }));
 const itemsUp = [
@@ -230,7 +231,7 @@ export default function MiniDrawer() {
 	    <div className={classes.contentContainer}>
 	      <div className={classes.content}>
 	        <Outlet />
-			<BottomBar/>
+		    <BottomBar/>
 	      </div>
 	    </div>
 	  </div>

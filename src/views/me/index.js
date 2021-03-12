@@ -78,7 +78,12 @@ const useStyles = makeStyles((theme) => ({
 		marginLeft:theme.spacing(5),
 		marginTop:theme.spacing(2),
 	},
-
+	title: {
+	  fontSize: 12,
+	  color: '#BEBEBE',
+	  margin: '10px 0',
+	  textAlign: 'center'
+	},
 }));
 
 export default function VerticalTabs() {
@@ -117,6 +122,8 @@ export default function VerticalTabs() {
 	  <Box textAlign="center" m={1}>
 		  本人很懒,简介什么都没有(职业介绍)
 	  </Box>
+	  <br/>
+	  <p className={classes.title}>此信息用于站内言职社区功能，不会同步修改简历</p>
 	  <br/>
 	  <Box textAlign="center" m={1}  >
 	  {/*<Typography className={classes.typography} >*/}
@@ -164,6 +171,7 @@ export default function VerticalTabs() {
       待开发中
     </TabPanel>
   </div>
+  
   </Page>
   );
 }

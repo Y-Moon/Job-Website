@@ -7,7 +7,7 @@ import TopFrame from './topFrame';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    
+    margin:"100px 150px",
   }
 }));
 const SchoolView=()=>{

@@ -3,49 +3,72 @@ import {
 	makeStyles,
 	Box,
 	Typography,
-	Card,
+	Paper ,
+	Link,
+	List,
+	ListItem,
+	ListItemText
 }from '@material-ui/core';
+import { Link as RouterLink } from 'react-router-dom';
+import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import JobData from './JobLabel.json';
 const useStyles = makeStyles((theme) => ({
   root: {
-	width:"1920px",
+	width:"1200px",
   },
   leftBox: {
 	  display:"inline-block",
 	  position:"relative",
+	  padding:"10px",
 	  overflow: "auto",
-	   top:50, 
-	   left:50, 
-	   width:300, 
-	   height:400,
-	   padding:theme.spacing(3),
-	    backgroundColor:"#55ff00",
+	  width:300, 
+	  height:360,
+	  padding:theme.spacing(3),
+	  backgroundColor:"#ffffff",
   },
   rightBox :{
 	  display:"inline-block",
 	  position:"relative",
 	  overflow: "auto",
-	   top:50, 
-	   left:100, 
-	   width:400, 
-	   height:400, 
-	   backgroundColor:"#ff0000",
-  }
+	  left:30,
+	   width:720, 
+	   height:360, 
+	   backgroundColor:"#ffffff",
+	   border:"1px solid",
+  },
 }));
 const TopFrame=()=>{
 	const classes=useStyles();
 	return(
 		<Box className={classes.root}>
-			<Card  className={classes.leftBox}>
-				<Box fontSize={20} display="inline" fontWeight="fontWeightLight">
-					技术
-				</Box>
-				<Box m={3} fontSize={15} display="inline" fontWeight="fontWeightLight">
-					java
-				</Box>
+			<Paper   className={classes.leftBox}>
+				<List>
+				{JobData.map((object)=>(
+					<ListItem button key={object.title}>
+						<ListItemText primary={object.title} />
+						{object.Link.map((minorObj)=>(
+						<ListItemText >
+						<Link
+						  component={RouterLink}
+						  to={minorObj.to}
+						  color="textSecondary"
+						>
+							<Box m={1} fontSize={10} display="inline" >
+							  {minorObj.content}
+							</Box>
+						</Link>
+						</ListItemText >
+						))}
+						
+						<ArrowRightIcon color="action"/>
+					</ListItem>
+				))}
+				</List>
 				
-			</Card>
-			<Card className={classes.rightBox}>
-			</Card>
+			</Paper >
+			<Box  className={classes.rightBox}>
+				<img src="./pic/AD.jpg" alt="广告"/>
+			</Box >
 		</Box>
 	)
 }
