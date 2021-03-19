@@ -3,15 +3,15 @@ import axios from 'axios';
 import Page from 'src/components/Page';
 import {
   makeStyles,
-  Typography
+  Typography,
+  Box
 } from '@material-ui/core';
-import CardList from '../hot/cardLayout';
+import PageCard from './card';
 import { NavLink } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.white,
-    minHeight: '100%',
     paddingBottom: theme.spacing(3),
     paddingTop: theme.spacing(3),
     paddingLeft: theme.spacing(2)
@@ -94,7 +94,9 @@ const CompanyView = () => {
             key={idx2}>{i}</a>)}
         </div>
       ))}
-      <CardList />
+	  <Box mt={5}>
+		<PageCard />
+	  </Box>
     </Page>);
 };
 export default CompanyView;

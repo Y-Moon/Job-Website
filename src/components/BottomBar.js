@@ -33,13 +33,16 @@ const useStyles = makeStyles((theme) => ({
   },
   BottomText: {
 	  padding:theme.spacing(3),
+  },
+  boxsize:{
+	  height:"23vh",
   }
 }));
 export default function CustomizedTables() {
   const classes = useStyles();
   return (
-  <Container>
-     <Divider />
+  <Container className={classes.boxsize}>
+     <Divider fixed />
      <Container className={classes.BottomText}>
       <Box className={classes.footerBox}>
         <Box fontWeight="fontWeightBold" className={classes.footerTitle}>企业服务</Box>
@@ -53,7 +56,7 @@ export default function CustomizedTables() {
         <Box>企业服务</Box>
         <Box>企业服务</Box>
       </Box>
-      <Box className={classes.footerBox}>
+      <Box className={classes.footerBox} >
         <Box fontWeight="fontWeightBold" className={classes.footerTitle}>企业服务</Box>
         <Box>企业服务</Box>
         <Box>企业服务</Box>

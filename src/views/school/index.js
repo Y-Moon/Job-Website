@@ -4,14 +4,10 @@ import {
 }from '@material-ui/core';
 import Page from 'src/components/Page';
 import TopFrame from './topFrame';
-
+import companyCard from './companyCard';
 const useStyles = makeStyles((theme) => ({
   root: {
-<<<<<<< HEAD
     margin:"100px 150px",
-=======
-
->>>>>>> a486f68e5c42bea7825379ecd430c839fb8cc43c
   }
 }));
 const SchoolView=()=>{

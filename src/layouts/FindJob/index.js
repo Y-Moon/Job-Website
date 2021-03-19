@@ -29,7 +29,6 @@ import{
 	Home as HomeIcon,
 	Business as BusinessIcon,
 	School as SchoolIcon,
-	Work as WorkIcon
 }from '@material-ui/icons';
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -107,13 +106,7 @@ const useStyles = makeStyles((theme) => ({
     flex: '1 1 auto',
     height: '100%',
     overflow: 'auto'
-<<<<<<< HEAD
   },
-  
-=======
-  }
-
->>>>>>> a486f68e5c42bea7825379ecd430c839fb8cc43c
 }));
 const itemsUp = [
   {
@@ -123,10 +116,6 @@ const itemsUp = [
   {
     href: '/findJob/school',
     title: '校园招聘'
-  },
-  {
-    href: '/findJob/job',
-    title: '职位'
   },
   {
     href: '/findJob/companyList',
@@ -147,7 +136,7 @@ const itemsDown=[
   	title: '我'
   },
 	];
-const iconsUp=[<HomeIcon />,<SchoolIcon />,<WorkIcon />,<BusinessIcon />];
+const iconsUp=[<HomeIcon />,<SchoolIcon />,<BusinessIcon />];
 const iconsDown=[<MailIcon />,<InboxIcon />,<FaceIcon />];
 export default function MiniDrawer() {
   const classes = useStyles();

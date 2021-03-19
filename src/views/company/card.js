@@ -1,86 +1,107 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Chip from '@material-ui/core/Chip';
-import Divider from '@material-ui/core/Divider';
-import Avatar from '@material-ui/core/Avatar';
-
+import PropTypes from 'prop-types';
+import {
+	Card,
+	CardContent,
+	Divider,
+	ButtonGroup,
+	Button,
+	TabPanel,
+	Grid
+	} from '@material-ui/core';
+import companyData from "./companyData";
 const useStyles = makeStyles((theme) => ({
-	company_pic:{
-		float:"left",
-		width:"50px",
-		height:"50px",
-		marginRight:theme.spacing(2)
+	root:{
+		
 	},
 	card_stype:{
-		height: '100%'
+		width:350,
+		height:300,
 	},
-	fontSmall: {
-		fontSize: 13,
+	pic:{
+		display:"block",
+		margin:"10px auto",
+		width:"150px",
+		height:"150px",
+		border:" 1px solid",
 	},
-  hr_style:{
-		marginTop:theme.spacing(1),
-		marginBottom:theme.spacing(1)
-	},
-	chip_style:{
-		marginRight:theme.spacing(1.5),
-		marginTop:theme.spacing(1)
-	},
-	typography_title:{
-		float:"left",
-		width:"100px",
-	},
-	typography_money:{
-		textAlign:"right",
-		color:"red"
-	},
-	a_company:{
-		textDecoration:"none",
-		color:"#4b4b4b"
+	button:{
+		width:100,
 	}
 	}))
-export default function PageCard() {
+	
+const PageCard= () =>{
   const classes = useStyles();
-
-  function CardOne() {
+  CardOne.PropTypes={
+    pic: PropTypes.String,
+    cname: PropTypes.String,
+    introduce: PropTypes.String,
+	comments: PropTypes.INT,
+	job: PropTypes.INT,
+	handle: PropTypes.String,
+  }
+  function CardOne(props) {
+	const { pic, cname, introduce,comments,job,handle, ...other } = props;
     return (
     <Card className={classes.card_stype}>
 		<CardContent>
-			<Typography className={classes.typography_title} noWrap >
-				安卓开发工程师
-			</Typography >
-			 <Typography  className={classes.typography_money}>
-			 	50k-100k
-			 </Typography >
-			  <Typography  className={classes.fontSmall} color="textSecondary" gutterBottom>
-				经验1-3年 / 本科
-			  </Typography>
-			  <div >
-			      <Chip className={classes.chip_style} label="java" size="small" variant="outline" />
-			      <Chip className={classes.chip_style} label="spring" size="small" variant="outline" />
-			      <Chip className={classes.chip_style} label="linux" size="small" variant="outline" />
-			      <Chip className={classes.chip_style} label="mysql" size="small" variant="outline" />
-			      <Chip className={classes.chip_style} label="mysql" size="small" variant="outline" />
-			  </div>
-			  <Divider className={classes.hr_style} />
-		  	<Avatar className={classes.company_pic}>H</Avatar>
-			 <Typography gutterBottom>
-			 <a href="https://www.baidu.com" className={classes.a_company}>
-				博库网
-			</a>
-			 </Typography >
-			 <Typography className={classes.fontSmall} color="textSecondary" noWrap >
-			 	福利多多福利多多福利多福利多多福利多多福利多福利多多福利多多福利多福利多多福利多多福利多
-			 </Typography >
+			<img src={pic} alt="company_picture" className={classes.pic}/>
+			<Typography align="center" >
+				{cname}
+			</Typography>
+			<Typography align="center" gutterBottom>
+				{introduce}
+			</Typography>
+			<Divider/>
+			        <Button className={classes.button}>
+						{comments}
+						<br/>
+						面试评价
+					</Button>
+			        <Button  className={classes.button}>
+						{job}
+						<br/>
+						在招职位
+					</Button>
+			        <Button  className={classes.button}>
+						{handle}
+						<br/>
+						简历处理率
+					</Button>
 		</CardContent>
     </Card >
     );
   }
-  return (
-    <div >
-	  <CardOne/>
-    </div>
+  return(
+  <div className={classes.root}>
+	  <Grid
+	    container
+	    spacing={2}
+	  >
+	  {
+	    companyData.map((companyObj,index)=>(
+		  <Grid
+			item
+			lg={3}
+			sm={6}
+			xl={3}
+			xs={12}
+		  >
+			<CardOne 
+			pic={companyObj.pic} 
+			cname={companyObj.name}
+			introduce={companyObj.introduce}
+			comments={companyObj.comments}
+			job={companyObj.job}
+			handle={companyObj.handle}
+			/>
+		  </Grid>
+	    ))
+	  }
+	  </Grid>
+  </div>
   );
 }
+export default  PageCard;
