@@ -5,7 +5,9 @@ import {
 	 } from '@material-ui/core';
 const useStyles = makeStyles((theme) => ({
 	root:{
-		width:100%
+		paddingLeft :50,
+		width:"100%",
+		marginLeft:"20vh",
 	},
 	title: {
 	  fontSize: 12,

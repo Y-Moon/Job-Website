@@ -24,7 +24,7 @@ const HotView = () => {
   return (
     <Page
       className={classes.root}
-      title='Hot Job'
+      title='hot job'
     >
       <Container maxWidth='lg'>
         <CardList />

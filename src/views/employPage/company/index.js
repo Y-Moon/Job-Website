@@ -12,9 +12,7 @@ import { NavLink } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.white,
-    paddingBottom: theme.spacing(3),
-    paddingTop: theme.spacing(3),
-    paddingLeft: theme.spacing(2)
+   padding:theme.spacing(8),
   },
   tabItemContainer: {
     height: '40px',
@@ -29,6 +27,9 @@ const useStyles = makeStyles((theme) => ({
     background: 'RGB(63,81,181)',
     color: '#FFF',
     padding: '4px 8px'
+  },
+  topStyle:{
+	  width:'1000px'
   }
 }));
 const CompanyView = () => {
@@ -85,6 +86,7 @@ const CompanyView = () => {
       title='company list'
       onClick={handleClick.bind(this)}
     >
+	<Box className={classes.topStyle}>
       {headData.map((i, idx) => (
         <div key={idx} className={classes.tabItemContainer}>
           <b>{i.title}&nbsp;</b>
@@ -94,6 +96,7 @@ const CompanyView = () => {
             key={idx2}>{i}</a>)}
         </div>
       ))}
+    </Box>
 	  <Box mt={5}>
 		<PageCard />
 	  </Box>

@@ -5,7 +5,7 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-
+import Page from 'src/components/Page';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -31,7 +31,9 @@ const useStyles = makeStyles((theme) => ({
   };
 
   return (
-    <div className={classes.root}>
+    <Page 
+	title="inbox"
+	 className={classes.root}>
       <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -98,7 +100,7 @@ const useStyles = makeStyles((theme) => ({
           </Typography>
         </AccordionDetails>
       </Accordion>
-    </div>
+    </Page>
   );
 }
 export default InboxView;

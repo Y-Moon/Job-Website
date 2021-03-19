@@ -84,10 +84,6 @@ const PageCard= () =>{
 	    companyData.map((companyObj,index)=>(
 		  <Grid
 			item
-			lg={3}
-			sm={6}
-			xl={3}
-			xs={12}
 		  >
 			<CardOne 
 			pic={companyObj.pic} 

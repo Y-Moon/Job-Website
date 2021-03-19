@@ -14,14 +14,17 @@ import Page from 'src/components/Page';
 import MyselfView from './myselfMessage';
 import ModifyPasswordView from './modifyPassword';
 import BindingView from './binding';
+import PrivacyView from './privacy';
+import MyIntroduction from './myIntroduction';
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
   return (
-    <div
+    <Page
       role="tabpanel"
       hidden={value !== index}
       id={`vertical-tabpanel-${index}`}
+	  title="me"
       aria-labelledby={`vertical-tab-${index}`}
       {...other}
     >
@@ -30,7 +33,7 @@ function TabPanel(props) {
           <Typography>{children}</Typography>
         </Box>
       )}
-    </div>
+    </Page>
   );
 }
 
@@ -112,14 +115,14 @@ const MYView =()=> {
       <BindingView/>
     </TabPanel>
     <TabPanel value={value} index={2}>
-      待开发中
+      <PrivacyView/>
     </TabPanel>
     <TabPanel value={value} index={3} >
 		<ModifyPasswordView/>
     </TabPanel>
 
     <TabPanel value={value} index={4}>
-      待开发中
+      <MyIntroduction/>
     </TabPanel>
   </div>
   

@@ -11,10 +11,6 @@ const useStyles = makeStyles((theme) => ({
 	root:{
 		paddingLeft :50,
 	},
-	threeTab:{
-		marginLeft:theme.spacing(5),
-		marginTop:theme.spacing(2),
-	},
 }));
 const ModifyPasswordView=()=>{
 	const classes = useStyles();

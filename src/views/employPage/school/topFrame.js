@@ -7,11 +7,12 @@ import {
 	Link,
 	List,
 	ListItem,
-	ListItemText
+	ListItemText,
 }from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import JobData from './JobLabel.json';
+import ADpic from './pic/AD.jpg';
 const useStyles = makeStyles((theme) => ({
   root: {
 	width:"1200px",
@@ -34,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
 	   width:720, 
 	   height:360, 
 	   backgroundColor:"#ffffff",
-	   border:"1px solid",
   },
 }));
 const TopFrame=()=>{
@@ -65,9 +65,7 @@ const TopFrame=()=>{
 				))}
 				</List>
 			</Paper >
-			<Box  className={classes.rightBox}>
-				<img src="pic/AD.jpg" alt="广告"/>
-			</Box >
+			<img  src={ADpic} alt="广告"  className={classes.rightBox}/>
 		</Box>
 	)
 }

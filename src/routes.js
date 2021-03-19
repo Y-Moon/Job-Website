@@ -11,11 +11,11 @@ import NotFoundView from 'src/views/errors/NotFoundView';
 import ProductListView from 'src/views/product/ProductListView';
 import RegisterView from 'src/views/auth/RegisterView';
 import SettingsView from 'src/views/settings/SettingsView';
-import HotView from 'src/views/hot';
-import CompanyView from 'src/views/company';
-import MyMessageView from 'src/views/me';
-import InboxView from 'src/views/inbox';
-import SchoolView from 'src/views/school';
+import HotView from 'src/views/employPage/hot';
+import CompanyView from 'src/views/employPage/company';
+import MyMessageView from 'src/views/employPage/me';
+import InboxView from 'src/views/employPage/inbox';
+import SchoolView from 'src/views/employPage/school';
 
 const routes = [
   {
