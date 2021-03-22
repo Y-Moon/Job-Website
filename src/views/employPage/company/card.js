@@ -1,4 +1,4 @@
-import React from 'react';
+import {React,forwardRef,useImperativeHandle,useState} from 'react';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import {
 	TabPanel,
 	Grid
 	} from '@material-ui/core';
-import companyData from "./companyData";
 const useStyles = makeStyles((theme) => ({
 	root:{
 		
@@ -30,24 +29,28 @@ const useStyles = makeStyles((theme) => ({
 	button:{
 		width:100,
 	}
-	}))
+	}));
 	
-const PageCard= () =>{
+function PageCard (props,cardRef){
   const classes = useStyles();
-  CardOne.PropTypes={
-    pic: PropTypes.String,
-    cname: PropTypes.String,
-    introduce: PropTypes.String,
-	comments: PropTypes.INT,
-	job: PropTypes.INT,
-	handle: PropTypes.String,
-  }
+  let [state,setstate]=useState(0);
+  // console.log("子组件刷新");
+  useImperativeHandle(cardRef, () => ({
+          handleJson: (cardList) => {
+		  console.log("测试测试");
+		  setstate(state+1);
+		  }
+    }));
+	console.log(state);
   function CardOne(props) {
-	const { pic, cname, introduce,comments,job,handle, ...other } = props;
+		  const { pic, cname, introduce,comments,job,handle,test, ...other } = props;
+	console.log(pic);
+	console.log(props);
+	
     return (
-    <Card className={classes.card_stype}>
+    <Card className={classes.card_stype} >
 		<CardContent>
-			<img src={pic} alt="company_picture" className={classes.pic}/>
+			<img src={require({pic})} alt="company_picture" className={classes.pic}/>
 			<Typography align="center" >
 				{cname}
 			</Typography>
@@ -75,15 +78,16 @@ const PageCard= () =>{
     );
   }
   return(
-  <div className={classes.root}>
+  <div className={classes.root} ref={cardRef} >
 	  <Grid
 	    container
 	    spacing={2}
 	  >
 	  {
-	    companyData.map((companyObj,index)=>(
+	    [].map((companyObj,index)=>(
 		  <Grid
 			item
+			key={index}
 		  >
 			<CardOne 
 			pic={companyObj.pic} 
@@ -100,4 +104,5 @@ const PageCard= () =>{
   </div>
   );
 }
-export default  PageCard;
+export default  forwardRef(PageCard);
+// export default  PageCard;

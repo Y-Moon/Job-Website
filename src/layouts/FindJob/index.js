@@ -197,7 +197,8 @@ export default function MiniDrawer() {
         <List>
 			{itemsUp.map((item,index) => (
 			  <ListItem button component={RouterLink}
-			    to={item.href}>
+			    to={item.href}
+				key={index}>
 			    <ListItemIcon>
 			  	{iconsUp[index]}
 			    </ListItemIcon>
@@ -211,6 +212,7 @@ export default function MiniDrawer() {
 			  <ListItem button
 			  component={RouterLink}
 			  to={item.href}
+			  key={index}
 			  >
 			    <ListItemIcon>
 			  	{iconsDown[index]}
