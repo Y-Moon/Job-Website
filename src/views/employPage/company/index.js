@@ -1,4 +1,4 @@
-import React,{ useState,useRef} from 'react';
+import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import Page from 'src/components/Page';
 import {
@@ -11,9 +11,9 @@ import { NavLink } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-   backgroundColor: theme.palette.background.white,
-   padding:theme.spacing(8),
-   minHeight: '100%',
+    backgroundColor: theme.palette.background.white,
+    padding: theme.spacing(8),
+    minHeight: '100%'
   },
   tabItemContainer: {
     height: '40px',
@@ -21,29 +21,29 @@ const useStyles = makeStyles((theme) => ({
   },
   tabItem: {
     padding: '5px 10px',
-	margin: '2px',
+    margin: '2px',
     color: 'black',
     cursor: 'pointer'
   },
   tabItemActive: {
     background: 'RGB(63,81,181)',
-    color: '#FFF',
+    color: '#FFF'
   },
-  topStyle:{
-	  width:'1000px'
+  topStyle: {
+    width: '1000px'
   }
 }));
 
 const CompanyView = () => {
-  let childRef=useRef();
+  let childRef = useRef();
   const classes = useStyles();
-  const [state,setState] = useState([]);
+  const [state, setState] = useState([]);
   let paramKeys = ['dd', 'rz', 'gm', 'ly'];
   let params = {};
-  console.log("父组件");
+  console.log('父组件');
   paramKeys.forEach(i => params[i] = 1);
   let lastIdMap = {};
-  let initJson=[];
+  let initJson = [];
   Object.assign(lastIdMap, params);
   let headData = [
     {
@@ -76,20 +76,20 @@ const CompanyView = () => {
     data = data.split('-');
     let k = data[0];
     let id = data[1];
-	// console.log(childRef);
+    // console.log(childRef);
     let siblings = target.parentNode.children;
     siblings[lastIdMap[k]].classList.remove(classes.tabItemActive);
     target.classList.add(classes.tabItemActive);
     lastIdMap[k] = id;
     setParams({ k, v: id });
     // console.log(params);
-    axios.get('http://localhost:8010/employPage/company/cardList',{params}).then(r => {
-		let cardJson=r.data;
-		childRef.current.handleJson(cardJson);
-		// console.log(state);
-    },e=>{
-		console.log(e);
-	});
+    axios.get('http://localhost:8010/employPage/company/cardList', { params }).then(r => {
+      let cardJson = r.data;
+      childRef.current.handleJson(cardJson);
+      // console.log(state);
+    }, e => {
+      console.log(e);
+    });
   };
   return (
     <Page
@@ -97,20 +97,20 @@ const CompanyView = () => {
       title='company list'
       onClick={handleClick.bind(this)}
     >
-	<Box className={classes.topStyle}>
-      {headData.map((i, idx) => (
-        <div key={idx} className={classes.tabItemContainer}>
-          <b>{i.title}&nbsp;</b>
-          {i.items.map((i, idx2) => <a
-            className={[classes.tabItem, idx2 === 0 ? classes.tabItemActive : null].join(' ')}
-            data={paramKeys[idx] + '-' + (idx2 + 1)}
-            key={idx2}>{i}</a>)}
-        </div>
-      ))}
-    </Box>
-	  <Box mt={5}>
-		<PageCard  cardList={initJson} ref={childRef}/>
-	  </Box>
+      <Box className={classes.topStyle}>
+        {headData.map((i, idx) => (
+          <div key={idx} className={classes.tabItemContainer}>
+            <b>{i.title}&nbsp;</b>
+            {i.items.map((i, idx2) => <a
+              className={[classes.tabItem, idx2 === 0 ? classes.tabItemActive : null].join(' ')}
+              data={paramKeys[idx] + '-' + (idx2 + 1)}
+              key={idx2}>{i}</a>)}
+          </div>
+        ))}
+      </Box>
+      <Box mt={5}>
+        <PageCard cardList={initJson} ref={childRef} />
+      </Box>
     </Page>);
 };
 export default CompanyView;
