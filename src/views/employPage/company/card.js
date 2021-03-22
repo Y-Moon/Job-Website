@@ -33,12 +33,12 @@ const useStyles = makeStyles((theme) => ({
 	
 function PageCard (props,cardRef){
   const classes = useStyles();
-  let [state,setstate]=useState(0);
+  let [state,setstate]=useState([]);
   // console.log("子组件刷新");
   useImperativeHandle(cardRef, () => ({
           handleJson: (cardList) => {
 		  console.log("测试测试");
-		  setstate(state+1);
+		  setstate(cardList);
 		  }
     }));
 	console.log(state);
@@ -50,7 +50,7 @@ function PageCard (props,cardRef){
     return (
     <Card className={classes.card_stype} >
 		<CardContent>
-			<img src={require({pic})} alt="company_picture" className={classes.pic}/>
+			<img src={pic} alt="company_picture" className={classes.pic}/>
 			<Typography align="center" >
 				{cname}
 			</Typography>
@@ -84,7 +84,7 @@ function PageCard (props,cardRef){
 	    spacing={2}
 	  >
 	  {
-	    [].map((companyObj,index)=>(
+	    state.map((companyObj,index)=>(
 		  <Grid
 			item
 			key={index}
