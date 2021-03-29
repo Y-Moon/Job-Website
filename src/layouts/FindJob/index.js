@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { NavLink as RouterLink,Outlet } from 'react-router-dom';
 import BottomBar from '../../components/BottomBar'
+import AccountCircle from '@material-ui/icons/AccountCircle';
 import {
 	Button,
 	Drawer,
@@ -17,12 +18,13 @@ import {
 	IconButton,
 	ListItemIcon,
 	Container,
-	Box
+	Box,
+	Menu,
+	MenuItem
 } from '@material-ui/core';
 import{
 	ChevronLeft as ChevronLeftIcon,
 	ChevronRight as ChevronRightIcon,
-	Menu as MenuIcon,
 	MoveToInbox as InboxIcon,
 	Mail as MailIcon,
 	Face as FaceIcon,
@@ -83,6 +85,13 @@ const useStyles = makeStyles((theme) => ({
       width: theme.spacing(9) + 1,
     },
   },
+  accountButton:{
+	  marginLeft:'80vw',
+  },
+  leftBar:{
+	  marginLeft:'7px',
+  }
+  ,
   toolbar: {
     display: 'flex',
     alignItems: 'center',
@@ -142,8 +151,17 @@ export default function MiniDrawer() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [acopen, setAcopen] = React.useState(false);
   const handleDrawerOpen = () => {
     setOpen(true);
+  };
+  const handleAcOpen = (event) => {
+	  setAcopen(event.currentTarget);
+  };
+  const handleAcClose = (event) => {
+	  let target = event.target;
+	  let data = target.getAttribute('id');
+  	  setAcopen(null);
   };
 
   const handleDrawerClose = () => {
@@ -168,11 +186,57 @@ export default function MiniDrawer() {
               [classes.hide]: open,
             })}
           >
-            <MenuIcon />
+            <ChevronRightIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
-            WM 招聘网
+          <Typography variant="h5" noWrap>
+             招聘网
           </Typography>
+		  <div
+			className={classes.accountButton}
+		  >
+			  <IconButton
+				color="inherit"
+				aria-controls="ac-appbar"
+				aria-haspopup="true"
+				onClick={handleAcOpen}
+			  >
+				<AccountCircle/>
+			  </IconButton>
+				<Menu
+				  id="signout-menu"
+				  anchorEl={acopen}
+				  elevation={0}
+				  getContentAnchorEl={null}
+				  anchorOrigin={{
+				        vertical: 'bottom',
+				        horizontal: 'center',
+				      }}
+				  transformOrigin={{
+					vertical: 'top',
+					horizontal: 'center',
+				  }}
+				  keepMounted
+				  open={Boolean(acopen)}
+				  onClose={handleAcClose}
+				>
+				  <MenuItem 
+				  onClick={handleAcClose} 
+				  id={1}
+				  component={RouterLink}
+				  to={'/findJob/my'}
+				  >
+				  个人中心
+				  </MenuItem>
+				  <MenuItem 
+				  onClick={handleAcClose} 
+				  id={2}
+				  component={RouterLink}
+				  to={'/'}
+				  >
+				  登出
+				  </MenuItem>
+				</Menu>
+		  </div>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -198,7 +262,9 @@ export default function MiniDrawer() {
 			{itemsUp.map((item,index) => (
 			  <ListItem button component={RouterLink}
 			    to={item.href}
-				key={index}>
+				key={index}
+				className={classes.leftBar}
+				>
 			    <ListItemIcon>
 			  	{iconsUp[index]}
 			    </ListItemIcon>
@@ -213,6 +279,7 @@ export default function MiniDrawer() {
 			  component={RouterLink}
 			  to={item.href}
 			  key={index}
+			  className={classes.leftBar}
 			  >
 			    <ListItemIcon>
 			  	{iconsDown[index]}

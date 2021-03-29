@@ -43,7 +43,7 @@ function PageCard (props,cardRef){
     }));
 	console.log(state);
   function CardOne(props) {
-		  const { pic, cname, introduce,comments,job,handle,test, ...other } = props;
+	const { pic, cname, introduce,comments,job,handle,test, ...other } = props;
 	console.log(pic);
 	console.log(props);
 	

@@ -33,10 +33,8 @@ function CardList() {
   return (
   
     <Container maxWidth={false} className={classes.root}>
-	<Typography >
-		<Box m={5}>
-		</Box>
-	</Typography>
+	<Box m={5}>
+	</Box>
       <Grid
         container
         spacing={3}

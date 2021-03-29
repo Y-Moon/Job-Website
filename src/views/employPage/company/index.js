@@ -83,7 +83,7 @@ const CompanyView = () => {
     lastIdMap[k] = id;
     setParams({ k, v: id });
     // console.log(params);
-    axios.get('http://localhost:8010/employPage/company/cardList',{params}).then(r => {
+    axios.get('http://localhost:8010/employPage/company/cardList',{params:params}).then(r => {
 		let cardJson=r.data;
 		childRef.current.handleJson(cardJson);
 		// console.log(state);

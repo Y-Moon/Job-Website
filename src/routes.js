@@ -3,14 +3,14 @@ import { Navigate } from 'react-router-dom';
 import DashboardLayout from 'src/layouts/DashboardLayout';
 import MainLayout from 'src/layouts/MainLayout';
 import FindJobLayout from 'src/layouts/FindJob';
-import DashboardView from 'src/views/reports/DashboardView';
-import AccountView from 'src/views/account/AccountView';
-import CustomerListView from 'src/views/customer/CustomerListView';
+import DashboardView from 'src/views/company/reports/DashboardView';
+import AccountView from 'src/views/company/account/AccountView';
+import CustomerListView from 'src/views/company/customer/CustomerListView';
 import LoginView from 'src/views/auth/LoginView';
 import NotFoundView from 'src/views/errors/NotFoundView';
-import ProductListView from 'src/views/product/ProductListView';
+import ProductListView from 'src/views/company/product/ProductListView';
 import RegisterView from 'src/views/auth/RegisterView';
-import SettingsView from 'src/views/settings/SettingsView';
+import SettingsView from 'src/views/company/settings/SettingsView';
 import HotView from 'src/views/employPage/hot';
 import CompanyView from 'src/views/employPage/company';
 import MyMessageView from 'src/views/employPage/me';
@@ -19,7 +19,7 @@ import SchoolView from 'src/views/employPage/school';
 
 const routes = [
   {
-    path: 'app',
+    path: 'company',
     element: <DashboardLayout />,
     children: [
       { path: 'account', element: <AccountView /> },
@@ -27,7 +27,7 @@ const routes = [
       { path: 'dashboard', element: <DashboardView /> },
       { path: 'products', element: <ProductListView /> },
       { path: 'settings', element: <SettingsView /> },
-      { path: '/', element: <Navigate to="/app/customers" /> },
+      { path: '/', element: <Navigate to="/company/customers" /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   },

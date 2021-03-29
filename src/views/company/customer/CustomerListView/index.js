@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import {
   Box,
   Container,
@@ -6,7 +7,6 @@ import {
 } from '@material-ui/core';
 import Page from 'src/components/Page';
 import Results from './Results';
-import data from './data';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,16 +19,31 @@ const useStyles = makeStyles((theme) => ({
 
 const CustomerListView = () => {
   const classes = useStyles();
-  const [customers] = useState(data);
-
+  let data=[{"id":-1,"name":"","state":"","school":"","phone":"","date":""}];
+  const [candidate,setCandidate] = useState(data);
+  const requestDate=()=>{
+	  axios.get("http://127.0.0.1:8010/company/candidate/messageList").then(resp=>{
+	  		  console.log(resp.data);
+			  setCandidate(resp.data);
+	  },error=>{
+	  		  console.log(error);
+	  });
+  }
+  React.useEffect(()=>{
+	  console.log("effect is run...");
+	  if(candidate[0].id==-1){
+		requestDate();
+	  }
+  }
+  );
   return (
     <Page
       className={classes.root}
-      title="Customers"
+      title="广场"
     >
       <Container maxWidth={false}>
         <Box mt={3}>
-          <Results customers={customers} />
+          <Results customers={candidate} />
         </Box>
       </Container>
     </Page>

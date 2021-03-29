@@ -58,11 +58,11 @@ export default function PageCard() {
 				经验1-3年 / 本科
 			  </Typography>
 			  <div >
-			      <Chip className={classes.chip_style} label="java" size="small" variant="outline" />
-			      <Chip className={classes.chip_style} label="spring" size="small" variant="outline" />
-			      <Chip className={classes.chip_style} label="linux" size="small" variant="outline" />
-			      <Chip className={classes.chip_style} label="mysql" size="small" variant="outline" />
-			      <Chip className={classes.chip_style} label="tcp" size="small" variant="outline" />
+			      <Chip className={classes.chip_style} label="java" size="small" variant="outlined" />
+			      <Chip className={classes.chip_style} label="spring" size="small" variant="outlined" />
+			      <Chip className={classes.chip_style} label="linux" size="small" variant="outlined" />
+			      <Chip className={classes.chip_style} label="mysql" size="small" variant="outlined" />
+			      <Chip className={classes.chip_style} label="tcp" size="small" variant="outlined" />
 			  </div>
 			  <Divider className={classes.hr_style} />
 		  	<Avatar className={classes.company_pic}>A</Avatar>

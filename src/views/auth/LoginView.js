@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
+import axios from 'axios';
 import { Formik } from 'formik';
 import {
   Box,
@@ -10,9 +11,11 @@ import {
   Link,
   TextField,
   Typography,
-  makeStyles
+  makeStyles,
+  Snackbar
 } from '@material-ui/core';
 import GoogleIcon from 'src/icons/Google';
+import MuiAlert from '@material-ui/lab/Alert';
 import Page from 'src/components/Page';
 
 const useStyles = makeStyles((theme) => ({
@@ -27,7 +30,42 @@ const useStyles = makeStyles((theme) => ({
 const LoginView = () => {
   const classes = useStyles();
   const navigate = useNavigate();
+  const [open, setOpen] = React.useState("");
+  function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+  }
+  const handleClick = (data,code) => {
+	let param={"data":data,"code":code}
+    setOpen(param);
+  };
 
+  const handleClose = (event, reason) => {
+    setOpen("");
+  };
+  const verifyAC = (data) => {
+	  // console.log(data);
+	  axios.get('http://localhost:8010/login/verify',{params:data}).then(resp=>{
+		  console.log(resp.data);
+		  let code=resp.data;
+		  if(code==1){
+			handleClick("用户身份登陆成功！","success");
+			setTimeout(()=>navigate('/findJob', { replace: true }),1000);
+		  }else if(code==2){
+			  handleClick("企业身份登陆成功！","success");
+			  setTimeout(()=>navigate('/company', { replace: true }),1000);
+		  }else{
+			  handleClick("登陆失败，账号密码错误！！","warning");
+			  setTimeout(()=>navigate('/', { replace: true }),1000);
+			  ;
+		  }
+		  
+	  },error=>{
+		  handleClick("请求失败！！","error");
+		  navigate('/', { replace: true });
+		  console.log(error);
+	  }
+	  )
+  }
   return (
     <Page
       className={classes.root}
@@ -42,15 +80,15 @@ const LoginView = () => {
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              email: 'user@163.com',
-              password: 'Password123'
+              email: '123@163.com',
+              password: '123'
             }}
             validationSchema={Yup.object().shape({
               email: Yup.string().email('必须是一个邮箱').max(255).required('Email is required'),
               password: Yup.string().max(255).required('Password is required')
             })}
-            onSubmit={() => {
-              navigate('/findJob/hot', { replace: true });
+            onSubmit={(values) => {
+			  verifyAC(values);
             }}
           >
             {({
@@ -136,6 +174,15 @@ const LoginView = () => {
                     >
                       登录
                     </Button>
+					<Snackbar 
+						open={open} 
+						autoHideDuration={3000} 
+						onClose={handleClose}
+						>
+					        <Alert onClose={handleClose} severity={open.code}>
+					          {open.data}
+					        </Alert>
+				    </Snackbar>
 					</Box>
                   </Grid>
                   
@@ -144,7 +191,7 @@ const LoginView = () => {
                   color="textSecondary"
                   variant="body1"
                 >
-                 没有账号?
+                 没有账号?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   {' '}
                   <Link
                     component={RouterLink}

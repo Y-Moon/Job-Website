@@ -32,30 +32,30 @@ const user = {
 
 const items = [
   {
-    href: '/app/customers',
+    href: '/company/customers',
     icon: UsersIcon,
     title: '求职者'
   },
   {
-    href: '/app/products',
+    href: '/company/products',
     icon: ShoppingBagIcon,
     title: '招聘链接'
   },
   {
-    href: '/app/account',
+    href: '/company/account',
     icon: UserIcon,
     title: '企业信息修改'
   },
   {
-    href: '/app/settings',
+    href: '/company/settings',
     icon: SettingsIcon,
     title: '企业账户管理'
   },
   
   {
-    href: '/404',
+    href: '/',
     icon: AlertCircleIcon,
-    title: 'Error'
+    title: '退出'
   },
 ];
 
@@ -101,7 +101,7 @@ const NavBar = ({ onMobileClose, openMobile }) => {
           className={classes.avatar}
           component={RouterLink}
           src={user.avatar}
-          to="/app/account"
+          to="/compay/acconunt"
         />
         <Typography
           className={classes.name}

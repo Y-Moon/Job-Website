@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Results = ({ className, customers, ...rest }) => {
   const classes = useStyles();
+  console.log(customers);
   const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
@@ -40,7 +41,6 @@ const Results = ({ className, customers, ...rest }) => {
     } else {
       newSelectedCustomerIds = [];
     }
-
     setSelectedCustomerIds(newSelectedCustomerIds);
   };
 
@@ -97,10 +97,10 @@ const Results = ({ className, customers, ...rest }) => {
                   名字
                 </TableCell>
                 <TableCell>
-                  邮箱
+                  状态
                 </TableCell>
                 <TableCell>
-                  家庭地址
+                  学校
                 </TableCell>
                 <TableCell>
                   手机号码
@@ -144,16 +144,16 @@ const Results = ({ className, customers, ...rest }) => {
                     </Box>
                   </TableCell>
                   <TableCell>
-                    {customer.email}
+                    {customer.school}
                   </TableCell>
                   <TableCell>
-                    {`${customer.address.city}, ${customer.address.state}, ${customer.address.country}`}
+                    {customer.state}
                   </TableCell>
                   <TableCell>
                     {customer.phone}
                   </TableCell>
                   <TableCell>
-                    {moment(customer.createdAt).format('DD/MM/YYYY')}
+                    {moment(customer.date).format('DD/MM/YYYY')}
                   </TableCell>
                 </TableRow>
               ))}

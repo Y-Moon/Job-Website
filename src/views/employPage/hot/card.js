@@ -15,7 +15,8 @@ const useStyles = makeStyles((theme) => ({
 		marginRight:theme.spacing(2)
 	},
 	card_stype:{
-		height: '100%'
+		width:'350px',
+		padding:30,
 	},
 	fontSmall: {
 		fontSize: 13,
@@ -41,40 +42,38 @@ const useStyles = makeStyles((theme) => ({
 		color:"#4b4b4b"
 	}
 	}))
-export default function PageCard() {
+export default function PageCard(props) {
   const classes = useStyles();
-
+  const { jobName, salary,experience,education,jobKey,pic,website,cName, benefits,...other } = props;
   function CardOne() {
     return (
     <Card className={classes.card_stype}>
-		<CardContent>
 			<Typography className={classes.typography_title} noWrap >
-				安卓开发工程师
+				{jobName}
 			</Typography >
 			 <Typography  className={classes.typography_money}>
-			 	50k-100k
+			 	{salary}
 			 </Typography >
 			  <Typography  className={classes.fontSmall} color="textSecondary" gutterBottom>
-				经验1-3年 / 本科
+				{experience}/{education}
 			  </Typography>
 			  <div >
-			      <Chip className={classes.chip_style} label="java" size="small" variant="outline" />
-			      <Chip className={classes.chip_style} label="spring" size="small" variant="outline" />
-			      <Chip className={classes.chip_style} label="linux" size="small" variant="outline" />
-			      <Chip className={classes.chip_style} label="mysql" size="small" variant="outline" />
-			      <Chip className={classes.chip_style} label="tcp" size="small" variant="outline" />
+			      <Chip className={classes.chip_style} label="java" size="small" variant="outlined" />
+			      <Chip className={classes.chip_style} label="spring" size="small" variant="outlined" />
+			      <Chip className={classes.chip_style} label="linux" size="small" variant="outlined" />
+			      <Chip className={classes.chip_style} label="mysql" size="small" variant="outlined" />
+			      <Chip className={classes.chip_style} label="tcp" size="small" variant="outlined" />
 			  </div>
 			  <Divider className={classes.hr_style} />
 		  	<Avatar className={classes.company_pic}>A</Avatar>
 			 <Typography gutterBottom>
-			 <a href="https://www.baidu.com" className={classes.a_company}>
-				alibaba
-			</a>	
+				 <a href={website} className={classes.a_company}>
+					{cName}
+				</a>	
 			 </Typography >
 			 <Typography className={classes.fontSmall} color="textSecondary" noWrap >
-			 	5险一金/15薪/年底分红/年底出国7日游
+			 	{benefits}
 			 </Typography >
-		</CardContent>
     </Card >
     );
   }
