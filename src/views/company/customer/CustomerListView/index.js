@@ -21,9 +21,8 @@ const CustomerListView = () => {
   const classes = useStyles();
   let data=[{"id":-1,"name":"","state":"","school":"","phone":"","date":""}];
   const [candidate,setCandidate] = useState(data);
-  const requestDate=()=>{
-	  axios.get("http://127.0.0.1:8010/company/candidate/messageList").then(resp=>{
-	  		  console.log(resp.data);
+  const requestDate=(params)=>{
+	  axios.get("http://127.0.0.1:8010/company/candidateList",{params:params}).then(resp=>{
 			  setCandidate(resp.data);
 	  },error=>{
 	  		  console.log(error);

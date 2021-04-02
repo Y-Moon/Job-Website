@@ -9,6 +9,7 @@ import CustomerListView from 'src/views/company/customer/CustomerListView';
 import LoginView from 'src/views/auth/LoginView';
 import NotFoundView from 'src/views/errors/NotFoundView';
 import ProductListView from 'src/views/company/product/ProductListView';
+import PostJobView from 'src/views/company/product/PostJobView';
 import RegisterView from 'src/views/auth/RegisterView';
 import SettingsView from 'src/views/company/settings/SettingsView';
 import HotView from 'src/views/employPage/hot';
@@ -26,6 +27,7 @@ const routes = [
       { path: 'customers', element: <CustomerListView /> },
       { path: 'dashboard', element: <DashboardView /> },
       { path: 'products', element: <ProductListView /> },
+      { path: 'postjob', element: <PostJobView /> },
       { path: 'settings', element: <SettingsView /> },
       { path: '/', element: <Navigate to="/company/customers" /> },
       { path: '*', element: <Navigate to="/404" /> }

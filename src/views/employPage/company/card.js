@@ -43,17 +43,9 @@ function PageCard(props, cardRef) {
   console.log(state);
 
   function CardOne(props) {
-<<<<<<< HEAD
 	const { pic, cname, introduce,comments,job,handle,test, ...other } = props;
 	console.log(pic);
 	console.log(props);
-	
-=======
-    const { pic, cname, introduce, comments, job, handle, test, ...other } = props;
-    console.log(pic);
-    console.log(props);
-
->>>>>>> 425e610a4cf15dd8d6b0f319d887613fddae966d
     return (
       <Card className={classes.card_stype}>
         <CardContent>

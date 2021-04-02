@@ -3,7 +3,8 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import {
 	Box,
 	makeStyles,
-	TextField
+	TextField,
+	Button
 } from '@material-ui/core';
 import LockIcon from '@material-ui/icons/Lock';
 
@@ -18,11 +19,18 @@ const MyIntroduction=()=>{
 		<Box className={classes.root}>
 			<form>
 			  <label>
-			    此处上传简历:
+			    简历:
 			  </label>
-			  <br/>
-			  <br/>
-			  <input type="file" name="name" />
+			  <Box mt={2}>
+			  </Box>
+			  <Button
+			    color="primary"
+			    variant="contained"
+			    component="label"
+			  >
+			   点击上传
+			   <input type="file" name="name" hidden/>
+			  </Button>
 			</form>
 		</Box>
 	);

@@ -13,21 +13,6 @@ import {
   makeStyles
 } from '@material-ui/core';
 
-const states = [
-  {
-    value: 'alabama',
-    label: 'Alabama'
-  },
-  {
-    value: 'new-york',
-    label: 'New York'
-  },
-  {
-    value: 'san-francisco',
-    label: 'San Francisco'
-  }
-];
-
 const useStyles = makeStyles(() => ({
   root: {}
 }));
@@ -59,8 +44,8 @@ const ProfileDetails = ({ className, ...rest }) => {
     >
       <Card>
         <CardHeader
-          subheader="The information can be edited"
-          title="Profile"
+          subheader="这里可以修改企业的基本信息"
+          title="企业信息卡"
         />
         <Divider />
         <CardContent>
@@ -143,32 +128,25 @@ const ProfileDetails = ({ className, ...rest }) => {
                 value={values.country}
                 variant="outlined"
               />
+			  
+			 
             </Grid>
+			
             <Grid
               item
-              md={6}
+              md={12}
               xs={12}
             >
-              <TextField
-                fullWidth
-                label="Select State"
-                name="state"
-                onChange={handleChange}
-                required
-                select
-                SelectProps={{ native: true }}
-                value={values.state}
-                variant="outlined"
-              >
-                {states.map((option) => (
-                  <option
-                    key={option.value}
-                    value={option.value}
-                  >
-                    {option.label}
-                  </option>
-                ))}
-              </TextField>
+			<TextField
+			  fullWidth
+			  label="企业介绍"
+			  name="introduce"
+			  onChange={handleChange}
+			  required
+			  multiline
+			  rows={5}
+			  variant="outlined"
+			/>
             </Grid>
           </Grid>
         </CardContent>

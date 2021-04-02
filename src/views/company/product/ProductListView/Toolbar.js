@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import { NavLink as RouterLink } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -35,15 +36,11 @@ const Toolbar = ({ className, ...rest }) => {
         display="flex"
         justifyContent="flex-end"
       >
-        <Button className={classes.importButton}>
-          导入
-        </Button>
-        <Button className={classes.exportButton}>
-          导出
-        </Button>
         <Button
           color="primary"
           variant="contained"
+		  component={RouterLink}
+		  to="/company/postjob"
         >
           发布招聘信息
         </Button>

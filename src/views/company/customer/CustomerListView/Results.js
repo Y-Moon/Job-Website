@@ -27,15 +27,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Results = ({ className, customers, ...rest }) => {
-  const classes = useStyles();
   console.log(customers);
+  const classes = useStyles();
   const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
+  const [cards, setCards] = useState({"start":0,"end":limit});
 
   const handleSelectAll = (event) => {
     let newSelectedCustomerIds;
-
     if (event.target.checked) {
       newSelectedCustomerIds = customers.map((customer) => customer.id);
     } else {
@@ -69,7 +69,11 @@ const Results = ({ className, customers, ...rest }) => {
   };
 
   const handlePageChange = (event, newPage) => {
+	// console.log(newPage);
     setPage(newPage);
+	let value=event.target.value;
+	setCards({"start":newPage*limit,"end":newPage*limit+limit});
+	// console.log(cards)
   };
 
   return (
@@ -111,7 +115,7 @@ const Results = ({ className, customers, ...rest }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {customers.slice(0, limit).map((customer) => (
+              {customers.slice(cards.start, cards.end).map((customer) => (
                 <TableRow
                   hover
                   key={customer.id}

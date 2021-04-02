@@ -12,7 +12,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
-import GetAppIcon from '@material-ui/icons/GetApp';
+import Visibility from '@material-ui/icons/Visibility';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,14 +54,14 @@ const ProductCard = ({ className, product, ...rest }) => {
           gutterBottom
           variant="h4"
         >
-          {product.title}
+          {product.jobName}
         </Typography>
         <Typography
           align="center"
           color="textPrimary"
           variant="body1"
         >
-          {product.description}
+          {product.introduce}
         </Typography>
       </CardContent>
       <Box flexGrow={1} />
@@ -92,7 +92,7 @@ const ProductCard = ({ className, product, ...rest }) => {
             className={classes.statsItem}
             item
           >
-            <GetAppIcon
+            <Visibility
               className={classes.statsIcon}
               color="action"
             />
@@ -101,9 +101,9 @@ const ProductCard = ({ className, product, ...rest }) => {
               display="inline"
               variant="body2"
             >
-              {product.totalDownloads}
-              {' '}
-              Downloads
+			  浏览
+              {product.see}
+              次
             </Typography>
           </Grid>
         </Grid>

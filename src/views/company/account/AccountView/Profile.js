@@ -76,8 +76,10 @@ const Profile = ({ className, ...rest }) => {
           color="primary"
           fullWidth
           variant="text"
+		  component="label"
         >
-          上传照片
+		 上传照片
+		 <input type="file" name="name" hidden/>
         </Button>
       </CardActions>
     </Card>

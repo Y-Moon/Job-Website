@@ -56,7 +56,6 @@ const LoginView = () => {
 		  }else{
 			  handleClick("登陆失败，账号密码错误！！","warning");
 			  setTimeout(()=>navigate('/', { replace: true }),1000);
-			  ;
 		  }
 		  
 	  },error=>{
@@ -176,7 +175,7 @@ const LoginView = () => {
                     </Button>
 					<Snackbar 
 						open={open} 
-						autoHideDuration={3000} 
+						autoHideDuration={1000} 
 						onClose={handleClose}
 						>
 					        <Alert onClose={handleClose} severity={open.code}>
