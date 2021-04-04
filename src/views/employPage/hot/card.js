@@ -15,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
 		marginRight:theme.spacing(2)
 	},
 	card_stype:{
-		width:'350px',
 		padding:30,
 	},
 	fontSmall: {
@@ -44,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 	}))
 export default function PageCard(props) {
   const classes = useStyles();
-  const { jobName, salary,experience,education,jobKey,pic,website,cName, benefits,...other } = props;
+  const { jobName, salary,experience,education,jobKey,pic,website,companyName, benefits,...other } = props.data;
   function CardOne() {
     return (
     <Card className={classes.card_stype}>
@@ -58,17 +57,16 @@ export default function PageCard(props) {
 				{experience}/{education}
 			  </Typography>
 			  <div >
-			      <Chip className={classes.chip_style} label="java" size="small" variant="outlined" />
-			      <Chip className={classes.chip_style} label="spring" size="small" variant="outlined" />
-			      <Chip className={classes.chip_style} label="linux" size="small" variant="outlined" />
-			      <Chip className={classes.chip_style} label="mysql" size="small" variant="outlined" />
-			      <Chip className={classes.chip_style} label="tcp" size="small" variant="outlined" />
+				{   
+					jobKey.split("-").map((s,i)=>(
+					<Chip key={i} className={classes.chip_style} label={s} size="small" variant="outlined" />
+				))}
 			  </div>
 			  <Divider className={classes.hr_style} />
 		  	<Avatar className={classes.company_pic}>A</Avatar>
 			 <Typography gutterBottom>
 				 <a href={website} className={classes.a_company}>
-					{cName}
+					{companyName}
 				</a>	
 			 </Typography >
 			 <Typography className={classes.fontSmall} color="textSecondary" noWrap >

@@ -8,7 +8,7 @@ import {
   Paper,
   Tabs,
   Tab,
-  Grid ,
+  Grid,
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import Page from 'src/components/Page';
@@ -58,48 +58,58 @@ TabPanel.propTypes = {
 };
 const HotView = () => {
 	const classes = useStyles();
-	const [state,setState]=React.useState([]);
+	const [state,setState]=React.useState({"cardJson":[],"value":0});
 	let topvalue=0;
+	let url='http://localhost:8010/employPage/hotList';
 	const handleChange = (event, newValue) => {
 	    topvalue=newValue; 
 		console.log(topvalue);
-		requestService();
+		requestService(newValue);
 	  };
-	const topbarUpdate=(respJson)=>{
-		setState(respJson);
-		console.log(respJson);
-	}
-	function requestService(){
+	const requestService=(data)=>{
 	  let req={"hot":topvalue};
-	  axios.get('http://localhost:8010/employPage/hot/cardList',{params:req}).then(r => {
-	  let cardJson=r.data;
-	  console.log(cardJson);
-	  // console.log(state);
+	  axios.get(url,{params:req}).then(r => {
+		let cardJson=r.data;
+		setState({"cardJson":cardJson,"value":topvalue});
+		console.log(state);
 	  },e=>{
-	  console.log(e);
+		console.log(e);
 	  });
-	}
+	};
+	React.useEffect(()=>{
+		if(state.cardJson.length==0||state==null){
+			requestService(0);
+		}
+	})
   return (
     <Page
       className={classes.root}
       title='hot job'
     >
-	  <TopBar topbarUpdate={topbarUpdate}/>
+	  <TopBar 
+		handleChange={handleChange}
+		value={state.value}
+		/>
       <Divider/>
       <TabPanel value={topvalue} index={0} className={classes.TabPanelStyle}>
         <Grid
           container
           spacing={3}
       	>
-          <Grid
-            item
-            lg={4}
-            sm={6}
-            xl={4}
-            xs={12}
-          >
-            <MyCard />
-          </Grid>
+			{state.cardJson.map((s,i)=>(
+				<Grid
+				  item
+				  lg={4}
+				  sm={6}
+				  xl={4}
+				  xs={12}
+				  key={i}
+				>
+				<MyCard 
+					data={s}
+				  />
+				</Grid>
+			))}
         </Grid>
       </TabPanel>
        <Pagination count={10} className={classes.paginationStyle}>

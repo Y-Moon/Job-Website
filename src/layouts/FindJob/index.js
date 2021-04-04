@@ -133,25 +133,42 @@ const itemsUp = [
 ];
 const itemsDown=[
   {
-	href: '/findJob/inbox',
-	title: '收件箱'
+  	href: 'http://localhost:8010/file/test.txt',
+  	title: '简历下载'
   },
   {
-  	href: '/findJob/hot',
-  	title: '简历下载'
+	href: '/findJob/inbox',
+	title: '收件箱'
   },
   {
   	href: '/findJob/my',
   	title: '我'
   },
-	];
+];
 const iconsUp=[<HomeIcon />,<SchoolIcon />,<BusinessIcon />];
-const iconsDown=[<MailIcon />,<InboxIcon />,<FaceIcon />];
+const iconsDown=[<InboxIcon />,<MailIcon />,<FaceIcon />];
 export default function MiniDrawer() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [acopen, setAcopen] = React.useState(false);
+  const download=(blob,filename)=>{
+    // // 字符内容转变成blob地址
+    // var blob = new Blob([content]);
+     // 创建隐藏的可下载链接
+    var eleLink = document.createElement('a');
+    eleLink.download = filename;
+    eleLink.style.display = 'none';
+    eleLink.href = URL.createObjectURL(blob);
+    // 触发点击
+    document.body.appendChild(eleLink);
+    eleLink.click();
+    // 然后移除
+    document.body.removeChild(eleLink);
+    setTimeout(function () { //延时释放
+      URL.revokeObjectURL(blob); //用URL.revokeObjectURL()来释放这个object URL
+    }, 100);
+  }
   const handleDrawerOpen = () => {
     setOpen(true);
   };

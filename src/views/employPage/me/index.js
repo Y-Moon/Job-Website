@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
-	height:"30vh",
+	height:"200px",
   },
   portrait: {
 	  margin:"0 auto 30px auto",

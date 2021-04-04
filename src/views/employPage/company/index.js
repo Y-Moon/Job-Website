@@ -43,6 +43,7 @@ const CompanyView = () => {
   console.log('父组件');
   paramKeys.forEach(i => params[i] = 1);
   let lastIdMap = {};
+  let url='http://localhost:8010/employPage/companyList';
   let initJson = [];
   Object.assign(lastIdMap, params);
   let headData = [
@@ -69,6 +70,21 @@ const CompanyView = () => {
     // paramKeys.forEach(i => res += `${i}=${params[i]}&`);
     // return res.slice(0, -1);
   };
+  const requestService=(params)=>{
+	  axios.get(url,{params:params}).then(r => {
+	  	let cardJson=r.data;
+	  	childRef.current.handleJson(cardJson);
+		setState(cardJson);
+	  	// console.log(state);
+	  },e=>{
+	  	console.log(e);
+	  });
+  };
+  React.useEffect(()=>{
+	if(state.length==0||state==null){
+		requestService()
+	}
+  });
   const handleClick = (e) => {
     let target = e.target;
     let data = target.getAttribute('data');
@@ -78,25 +94,14 @@ const CompanyView = () => {
     let id = data[1];
     // console.log(childRef);
     let siblings = target.parentNode.children;
+	
     siblings[lastIdMap[k]].classList.remove(classes.tabItemActive);
     target.classList.add(classes.tabItemActive);
     lastIdMap[k] = id;
     setParams({ k, v: id });
+	console.log(params);
     // console.log(params);
-    axios.get('http://localhost:8010/employPage/company/cardList',{params:params}).then(r => {
-		let cardJson=r.data;
-		childRef.current.handleJson(cardJson);
-		// console.log(state);
-    },e=>{
-		console.log(e);
-	});
-    axios.get('http://localhost:8010/employPage/company/cardList', { params }).then(r => {
-      let cardJson = r.data;
-      childRef.current.handleJson(cardJson);
-      // console.log(state);
-    }, e => {
-      console.log(e);
-    });
+    requestService(params);
   };
   return (
     <Page

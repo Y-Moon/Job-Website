@@ -57,8 +57,6 @@ const  BenefitsView=(props)=>{
 					  variant="outlined"
 					/>
 			<br/>
-			
-			
 		</div>
 	);
 };

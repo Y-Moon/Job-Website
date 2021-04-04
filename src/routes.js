@@ -17,6 +17,7 @@ import CompanyView from 'src/views/employPage/company';
 import MyMessageView from 'src/views/employPage/me';
 import InboxView from 'src/views/employPage/inbox';
 import SchoolView from 'src/views/employPage/school';
+import Download from 'src/layouts/FindJob/download';
 
 const routes = [
   {
@@ -42,6 +43,7 @@ const routes = [
       { path: 'my', element: <MyMessageView /> },
       { path: 'inbox', element: <InboxView /> },
       { path: 'school', element: <SchoolView /> },
+      { path: 'download', element: <Download /> },
       { path: '/', element: <Navigate to="/findJob/hot" /> },
 	  // { path: '*', element: <Navigate to="/404" /> }
     ]
