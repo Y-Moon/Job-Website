@@ -133,7 +133,7 @@ const itemsUp = [
 ];
 const itemsDown=[
   {
-  	href: 'http://localhost:8010/file/test.txt',
+  	href: '/findJob/download',
   	title: '简历下载'
   },
   {
