@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import { NavLink as RouterLink } from 'react-router-dom';
 import {
   AppBar,
   Badge,
@@ -53,8 +53,8 @@ const TopBar = ({
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <IconButton component={RouterLink} color="inherit" to="/">
-		    <InputIcon />
+          <IconButton color="inherit">
+            <InputIcon />
           </IconButton>
         </Hidden>
         <Hidden lgUp>

@@ -9,8 +9,6 @@ import {
 	ListItem,
 	ListItemText,
 }from '@material-ui/core';
-import { Link as RouterLink } from 'react-router-dom';
-import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import JobData from './JobLabel.json';
 import ADpic from './pic/AD.jpg';
 const useStyles = makeStyles((theme) => ({
@@ -32,26 +30,30 @@ const useStyles = makeStyles((theme) => ({
 	  position:"relative",
 	  overflow: "auto",
 	  left:30,
-	   width:720, 
-	   height:360, 
-	   backgroundColor:"#ffffff",
+	  width:720, 
+	  height:360, 
+	  backgroundColor:"#ffffff",
   },
 }));
-const TopFrame=()=>{
+const TopFrame=(props)=>{
 	const classes=useStyles();
+	const test23=(category,e)=>{
+		props.onClick(category);
+	}
 	return(
 		<Box className={classes.root}>
 			<Paper   className={classes.leftBox}>
 				<List>
 				{JobData.map((object)=>(
-					<ListItem button key={object.title}>
+					<ListItem button 
+					key={object.title}
+					>
 						<ListItemText primary={object.title} />
-						{object.Link.map((minorObj)=>(
-						<ListItemText >
+						{object.Link.map((minorObj,index)=>(
+						<ListItemText key={index}>
 						<Link
-						  component={RouterLink}
-						  to={minorObj.to}
 						  color="textSecondary"
+						  onClick={(e)=>test23(minorObj.category,e)}
 						>
 							<Box m={1} fontSize={10} display="inline" >
 							  {minorObj.content}
@@ -60,7 +62,6 @@ const TopFrame=()=>{
 						</ListItemText >
 						))}
 						
-						<ArrowRightIcon color="action"/>
 					</ListItem>
 				))}
 				</List>

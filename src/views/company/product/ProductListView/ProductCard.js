@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import CloseIcon from '@material-ui/icons/Close';
 import {
   Avatar,
   Box,
@@ -9,7 +10,8 @@ import {
   Divider,
   Grid,
   Typography,
-  makeStyles
+  makeStyles,
+  Fab
 } from '@material-ui/core';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import Visibility from '@material-ui/icons/Visibility';
@@ -25,17 +27,34 @@ const useStyles = makeStyles((theme) => ({
   },
   statsIcon: {
     marginRight: theme.spacing(1)
+  },
+  button:{
+	  background:'#FFF',
+	  boxShadow:'0 0 0 0 #FFF'
   }
 }));
 
-const ProductCard = ({ className, product, ...rest }) => {
+const ProductCard = ({ className, product, delcard,...rest }) => {
   const classes = useStyles();
-
+  const handleDelete=()=>{
+	  delcard(product.id);
+	  console.log("delete:  "+product.id);
+  }
   return (
     <Card
       className={clsx(classes.root, className)}
       {...rest}
     >
+	  <Fab 
+		size='small'
+		variant='round'
+	  	className={classes.button}
+		onClick={handleDelete}
+	  	>
+	  	<CloseIcon
+			fontSize='small'
+			/>
+	  </Fab >
       <CardContent>
         <Box
           display="flex"

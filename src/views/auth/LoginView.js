@@ -2,6 +2,7 @@ import React from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import axios from 'axios';
+
 import { Formik } from 'formik';
 import {
   Box,
@@ -30,40 +31,48 @@ const useStyles = makeStyles((theme) => ({
 const LoginView = () => {
   const classes = useStyles();
   const navigate = useNavigate();
-  const [open, setOpen] = React.useState("");
+  const [state, setState] = React.useState({"data":"","code":"","open":false});
   function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
   }
   const handleClick = (data,code) => {
-	let param={"data":data,"code":code}
-    setOpen(param);
+	let param={"data":data,"code":code,"open":true}
+    setState(param);
   };
 
   const handleClose = (event, reason) => {
-    setOpen("");
+    setState({"data":"","code":"info","open":false});
   };
   const verifyAC = (data) => {
 	  // console.log(data);
+	  // document.cookie.clearAsync;
+	  document.cookie ="userName="+"";
+	  console.log(document.cookie);
 	  axios.get('http://localhost:8010/login/verify',{params:data}).then(resp=>{
 		  console.log(resp.data);
 		  let code=resp.data;
 		  if(code==1){
 			handleClick("用户身份登陆成功！","success");
+			document.cookie ="userName="+data.email;
 			setTimeout(()=>navigate('/findJob', { replace: true }),1000);
 		  }else if(code==2){
 			  handleClick("企业身份登陆成功！","success");
+			  document.cookie ="userName="+data.email;
 			  setTimeout(()=>navigate('/company', { replace: true }),1000);
+		  }else if(code==3){
+			  handleClick("管理员身份登陆成功！","success");
+			  document.cookie ="userName="+data.email;
+			  setTimeout(()=>navigate('/admin', { replace: true }),1000);
 		  }else{
 			  handleClick("登陆失败，账号密码错误！！","warning");
-			  setTimeout(()=>navigate('/', { replace: true }),1000);
+			  // setTimeout(()=>navigate('/', { replace: true }),1000);
 		  }
-		  
 	  },error=>{
 		  handleClick("请求失败！！","error");
-		  navigate('/', { replace: true });
-		  console.log(error);
+		  // setTimeout(()=>navigate('/', { replace: true }),1000);
 	  }
 	  )
+	  console.log(document.cookie);
   }
   return (
     <Page
@@ -80,13 +89,16 @@ const LoginView = () => {
           <Formik
             initialValues={{
               email: '123@163.com',
-              password: '123'
+              password: '123456'
             }}
             validationSchema={Yup.object().shape({
               email: Yup.string().email('必须是一个邮箱').max(255).required('Email is required'),
               password: Yup.string().max(255).required('Password is required')
             })}
-            onSubmit={(values) => {
+            onSubmit={(values,credentials) => {
+				setTimeout(() => {
+				     credentials.setSubmitting(false);
+				   }, 100);
 			  verifyAC(values);
             }}
           >
@@ -174,14 +186,15 @@ const LoginView = () => {
                       登录
                     </Button>
 					<Snackbar 
-						open={open} 
+						open={state.open}
 						autoHideDuration={1000} 
 						onClose={handleClose}
 						>
-					        <Alert onClose={handleClose} severity={open.code}>
-					          {open.data}
+					        <Alert onClose={handleClose} severity={state.code}>
+					          {state.data}
 					        </Alert>
 				    </Snackbar>
+						
 					</Box>
                   </Grid>
                   
@@ -194,7 +207,7 @@ const LoginView = () => {
                   {' '}
                   <Link
                     component={RouterLink}
-                    to="/register"
+                    to="/userRegister"
                     variant="h6"
                   >
                     用户注册
@@ -202,7 +215,7 @@ const LoginView = () => {
 				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				  <Link
 				    component={RouterLink}
-				    to="/register"
+				    to="/companyRegister"
 				    variant="h6"
 				  >
 				   企业注册

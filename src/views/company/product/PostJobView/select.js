@@ -7,7 +7,8 @@ import {
 	RadioGroup,
 	Radio,
 	FormControlLabel,
-	TextField
+	TextField,
+	Box
 } from '@material-ui/core';
 //样式表
 const useStyles = makeStyles((theme) => ({
@@ -64,13 +65,23 @@ let lable=[
 		'number':'6-2'
 	}];
 //主函数
-const  SelectView=()=>{
+let jobKey=["","","","",""];
+const  SelectView=(props)=>{
 	const classes = useStyles();
-	
-	 const [value, setValue] = React.useState('female');
-	  const handleChange = (event) => {
-	    setValue(event.target.value);
-	  };
+	let category="1-1";
+	const [value, setValue] = React.useState(category);
+	const handleChange = (event) => {
+	  setValue(event.target.value);
+	  category=event.target.value;
+	  props.getValue(category,null);
+	};
+	const handleTable=(e)=>{
+		const element=e.target;
+		const id=element.id;
+		let index=id.slice(id.length-1,id.length);
+		jobKey[parseInt(index)-1]=document.getElementById(id).value;
+		props.getValue(null,jobKey);
+	}
 	return(
 		<div
 			className={classes.root}
@@ -85,15 +96,18 @@ const  SelectView=()=>{
 							))
 						}
 				</RadioGroup>
+				<Box m={4}>
+				</Box>
 				<Typography gutterBottom>
 					关键字:
 				</Typography>
-				<TextField id="standard-basic" label="关键字1"  className={classes.textField} />
-				<TextField id="standard-basic" label="关键字2"  className={classes.textField} />
-				<TextField id="standard-basic" label="关键字3"  className={classes.textField} />
-				<TextField id="standard-basic" label="关键字4"  className={classes.textField} />
-				<TextField id="standard-basic" label="关键字5"  className={classes.textField} />
-			
+				<form onChange={handleTable}>
+					<TextField  id="skey1" label="关键字1"  className={classes.textField} />
+					<TextField  id="skey2" label="关键字2"  className={classes.textField} />
+					<TextField  id="skey3" label="关键字3"  className={classes.textField} />
+					<TextField  id="skey4" label="关键字4"  className={classes.textField} />
+					<TextField  id="skey5" label="关键字5"  className={classes.textField} />
+				</form>
 		</div>
 	);
 };

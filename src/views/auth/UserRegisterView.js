@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
@@ -11,9 +12,15 @@ import {
   Link,
   TextField,
   Typography,
-  makeStyles
+  makeStyles,
+  Snackbar,
 } from '@material-ui/core';
+import MuiAlert from '@material-ui/lab/Alert';
 import Page from 'src/components/Page';
+
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,11 +34,42 @@ const useStyles = makeStyles((theme) => ({
 const RegisterView = () => {
   const classes = useStyles();
   const navigate = useNavigate();
-
+  const [state, setState] = React.useState({"data":"","code":"info","open":false});
+  let url='http://localhost:8010/register/userRole/create';
+  
+  const handleClick = (data,code) => {
+  	let param={"data":data,"code":code,"open":true}
+    setState(param);
+  };
+  const handleClose = (event, reason) => {
+	  setState({"data":"","code":"info","open":false});
+  };
+  
+  const verifyAC = (data) => {
+  	  // console.log(data);
+  	  axios.get(url,{params:data}).then(resp=>{
+  		  console.log(resp.data);
+  		  let data=resp.data;
+		  if(data=="1"){
+			  console.log("注册成功！");
+			  handleClick("注册成功！！","success");
+			  setTimeout(()=>navigate('/', { replace: true }),1000);
+		  }else{
+			  handleClick(data,"warning");
+			  setTimeout(()=>navigate('/userRegister', { replace: true }),1000);
+			  location.reload();
+		  }
+  	  },error=>{
+  		  handleClick("请求失败！！","error");
+  		  setTimeout(()=>navigate('/userRegister', { replace: true }),1000);
+  		  console.log(error);
+		  location.reload();
+  	  })
+  }
   return (
     <Page
       className={classes.root}
-      title="Register"
+      title="userRegister"
     >
       <Box
         display="flex"
@@ -42,23 +80,21 @@ const RegisterView = () => {
         <Container maxWidth="sm">
           <Formik
             initialValues={{
+              name: '',
               email: '',
-              firstName: '',
-              lastName: '',
               password: '',
               policy: false
             }}
             validationSchema={
               Yup.object().shape({
-                email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-                firstName: Yup.string().max(255).required('First name is required'),
-                lastName: Yup.string().max(255).required('Last name is required'),
-                password: Yup.string().max(255).required('password is required'),
-                policy: Yup.boolean().oneOf([true], 'This field must be checked')
+                name: Yup.string().max(255).required('名字必须填！！'),
+                email: Yup.string().email('必须是合法邮箱！！').max(255).required('必须填写邮件！！'),
+                password: Yup.string().max(255).required('必须填写密码！！'),
+                policy: Yup.boolean().oneOf([true], '请仔细阅读服务条款')
               })
             }
-            onSubmit={() => {
-              navigate('/app/dashboard', { replace: true });
+            onSubmit={(values) => {
+              verifyAC(values);
             }}
           >
             {({
@@ -87,27 +123,15 @@ const RegisterView = () => {
                   </Typography>
                 </Box>
                 <TextField
-                  error={Boolean(touched.firstName && errors.firstName)}
+                  error={Boolean(touched.name && errors.name)}
                   fullWidth
-                  helperText={touched.firstName && errors.firstName}
-                  label="First name"
+                  helperText={touched.name && errors.name}
+                  label="name"
                   margin="normal"
-                  name="firstName"
+                  name="name"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.firstName}
-                  variant="outlined"
-                />
-                <TextField
-                  error={Boolean(touched.lastName && errors.lastName)}
-                  fullWidth
-                  helperText={touched.lastName && errors.lastName}
-                  label="Last name"
-                  margin="normal"
-                  name="lastName"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.lastName}
+                  value={values.name}
                   variant="outlined"
                 />
                 <TextField
@@ -194,6 +218,15 @@ const RegisterView = () => {
                     登录
                   </Link>
                 </Typography>
+				<Snackbar
+					open={state.open}
+					autoHideDuration={1000} 
+					onClose={handleClose}
+					>
+				        <Alert onClose={handleClose} severity={state.code}>
+				          {state.data}
+				        </Alert>
+				</Snackbar>
               </form>
             )}
           </Formik>

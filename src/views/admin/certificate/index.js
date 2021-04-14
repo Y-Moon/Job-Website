@@ -22,13 +22,9 @@ const CustomerListView = () => {
   let url='http://127.0.0.1:8010/company/candidateList';
   let data=[{"id":-1,"name":"","state":"","school":"","phone":"","date":""}];
   const [candidate,setCandidate] = useState(data);
-  const requestDate=(data)=>{
-	  axios.get(url,{params:data}).then(resp=>{
-		  console.log(resp);
-		  if(resp.data.length!=0){
-			console.log(resp.data);
-			setCandidate(resp.data);
-		  }
+  const requestDate=(params)=>{
+	  axios.get(url,{params:params}).then(resp=>{
+			  setCandidate(resp.data);
 	  },error=>{
 	  		  console.log(error);
 	  });
@@ -36,19 +32,14 @@ const CustomerListView = () => {
   React.useEffect(()=>{
 	  console.log("effect is run...");
 	  if(candidate[0].id==-1){
-		let username=document.cookie;
-		username=username.split('=')[1];
-		let data={'username':username}
-		console.log(data);
-		console.log(username);
-		requestDate(data);
+		requestDate();
 	  }
   }
   );
   return (
     <Page
       className={classes.root}
-      title="广场"
+      title="企业资质证书审查"
     >
       <Container maxWidth={false}>
         <Box mt={3}>

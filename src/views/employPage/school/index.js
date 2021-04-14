@@ -14,30 +14,40 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 const SchoolView=()=>{
-	let topvalue='1-1';
 	const classes=useStyles();
-	const [state,setState]=React.useState({"cardJson":[],"value":0});
-	let url='http://localhost:8010/employPage/hotList';
+	const [state,setState]=React.useState({"cardJson":[]});
+	const [init,setInit]=React.useState();
+	let url='http://localhost:8010/employPage/school/job';
 	const requestService=(data)=>{
-	  let req={"school":topvalue};
-	  axios.get(url,{params:req}).then(r => {
-		let cardJson=r.data;
-		setState({"cardJson":cardJson,"value":topvalue});
+	  let req={"category":data};
+	  axios.get(url,{params:req}).then(resp => {
+		let cardJson=resp.data;
+		if(cardJson!=null){
+		setState({"cardJson":cardJson});
+		}else{
+			setState({"cardJson":[]});
+		}
 		console.log(state);
 	  },e=>{
 		console.log(e);
 	  });
 	};
+	const handleClick=(category)=>{
+		console.log("点击"+category);
+		requestService(category);
+	}
 	React.useEffect(()=>{
-		if(state.cardJson.length==0||state==null){
-			requestService(0);
+		if(init==null||init.state!=1){
+			setInit({"state":1})
+			requestService("1-1");
 		}
 	});
 	return(
 		<Page
-		className={classes.root}
-		title='school'>
-			<TopFrame/>
+			className={classes.root}
+			title='school'
+			>
+			<TopFrame onClick={(category)=>handleClick(category)}/>
 			<Box mb={10}>
 			</Box>
 			<Grid

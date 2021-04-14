@@ -30,6 +30,7 @@ const  MySlider=(props)=>{
 		}];
 	const handleChange = (event, newValue) => {
 	    setValue(newValue);
+		props.getvalue(newValue);
 	  };
 	return(
 		<div
@@ -39,9 +40,10 @@ const  MySlider=(props)=>{
 			  经验要求:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			</Typography>
 			<Slider
-			className={classes.slider}
+			  className={classes.slider}
 			  value={value}
 			  marks={marks}
+			  step={1}
 			  onChange={handleChange}
 			  valueLabelDisplay="auto"
 			  aria-labelledby="range-slider"

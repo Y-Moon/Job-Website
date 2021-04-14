@@ -32,26 +32,10 @@ const user = {
 
 const items = [
   {
-    href: '/company/customers',
+    href: '/admin/certificate',
     icon: UsersIcon,
-    title: '求职者'
+    title: '企业资质证书审查'
   },
-  {
-    href: '/company/products',
-    icon: ShoppingBagIcon,
-    title: '招聘管理'
-  },
-  {
-    href: '/company/account',
-    icon: UserIcon,
-    title: '企业信息修改'
-  },
-  {
-    href: '/company/settings',
-    icon: SettingsIcon,
-    title: '企业账户管理'
-  },
-  
   {
     href: '/',
     icon: AlertCircleIcon,
@@ -75,7 +59,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const NavBar = ({ onMobileClose, openMobile }) => {
+const AdminLayout = ({ onMobileClose, openMobile }) => {
   const classes = useStyles();
   const location = useLocation();
 
@@ -97,27 +81,7 @@ const NavBar = ({ onMobileClose, openMobile }) => {
         flexDirection="column"
         p={2}
       >
-        <Avatar
-          className={classes.avatar}
-          component={RouterLink}
-          src={user.avatar}
-          to="/compay/acconunt"
-        />
-        <Typography
-          className={classes.name}
-          color="textPrimary"
-          variant="h5"
-        >
-          {user.name}
-        </Typography>
-        <Typography
-          color="textSecondary"
-          variant="body2"
-        >
-          {user.jobTitle}
-        </Typography>
       </Box>
-      <Divider />
       <Box p={2}>
         <List>
           {items.map((item) => (
@@ -161,14 +125,14 @@ const NavBar = ({ onMobileClose, openMobile }) => {
   );
 };
 
-NavBar.propTypes = {
+AdminLayout.propTypes = {
   onMobileClose: PropTypes.func,
   openMobile: PropTypes.bool
 };
 
-NavBar.defaultProps = {
+AdminLayout.defaultProps = {
   onMobileClose: () => {},
   openMobile: false
 };
 
-export default NavBar;
+export default AdminLayout;

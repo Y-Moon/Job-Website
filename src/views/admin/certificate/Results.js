@@ -98,16 +98,16 @@ const Results = ({ className, customers, ...rest }) => {
                   />
                 </TableCell>
                 <TableCell>
-                  名字
+                  申请人
                 </TableCell>
                 <TableCell>
-                  学校
+                  企业邮箱
                 </TableCell>
                 <TableCell>
-                  投递岗位
+                  企业名
                 </TableCell>
                 <TableCell>
-                  邮箱
+                  责任人手机
                 </TableCell>
                 <TableCell>
                   申请日期
@@ -151,10 +151,10 @@ const Results = ({ className, customers, ...rest }) => {
                     {customer.school}
                   </TableCell>
                   <TableCell>
-                    {customer.jobName}
+                    {customer.state}
                   </TableCell>
                   <TableCell>
-                    {customer.email}
+                    {customer.phone}
                   </TableCell>
                   <TableCell>
                     {moment(customer.date).format('DD/MM/YYYY')}

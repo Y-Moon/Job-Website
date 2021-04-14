@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import {
 	Box,
@@ -15,6 +16,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 const MyIntroduction=()=>{
 	const classes = useStyles();
+	const uploadFile=React.useRef();
+	let username=document.cookie;
+	username=username.split("=")[1];
+	console.log(username);
+	const url='http://localhost:8010/employPage/mine/recruit';
+	const onConfirm=(e)=>{
+		console.log(uploadFile.current.files[0]);
+		let formData=new FormData();
+		formData.append("username",username);
+		formData.append("file",uploadFile.current.files[0]);
+		axios.post(url,formData).then(resp=>{
+			console.log(resp.data);
+		},error=>{
+			console.log(error);
+		})
+	}
 	return (
 		<Box className={classes.root}>
 			<form>
@@ -29,7 +46,7 @@ const MyIntroduction=()=>{
 			    component="label"
 			  >
 			   点击上传
-			   <input type="file" name="name" hidden/>
+			   <input ref={uploadFile} onChange={onConfirm} type="file" name="name" hidden/>
 			  </Button>
 			</form>
 		</Box>
