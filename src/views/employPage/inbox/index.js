@@ -51,11 +51,10 @@ const useStyles = makeStyles((theme) => ({
   const delUrl='http://localhost:8010/public/delEmail';
   const getUrl='http://localhost:8010/public/getEmail';
   let username=getCookie(document.cookie,'userName');
+  const [state,setState]=React.useState({state:0,inboxState:0});
   const [checkedBox,setCheckedBox]=React.useState([]);
-  const [inboxState,setInboxState]=React.useState();
   let mailMessages=checkedBox.slice();
   global.mailState=new Array(mailMessages.length).fill(0);
-  const [state,setState]=React.useState({state:0,inboxState:0});
   function handleDel(){
 	  let delId=[];
 	  for(let index=0;index<mailState.length;){
@@ -77,10 +76,11 @@ const useStyles = makeStyles((theme) => ({
 	  request(delUrl,formData,'post');
   }
   function handleSwitch(){
-	setInboxState((inboxState+1)%2);
-	handleRequest(inboxState);
+	let inboxStateSlice={...state,inboxState:(state.inboxState+1)%2};
+	console.log(inboxStateSlice);
+	setState(inboxStateSlice);
+	handleRequest(state.inboxState);
 	console.log(state);
-	console.log(inboxState);
 	
   }
   function handleRequest(state){
@@ -99,6 +99,7 @@ const useStyles = makeStyles((theme) => ({
   }
   React.useEffect(()=>{
 	  if(state.state==0){
+		//   console.log(inboxState);
 		  setState({...state,state:1});
 		  let param={"username": username,"state":0}
 		  request(getUrl,param,'get').then(resp=>{
@@ -120,9 +121,9 @@ const useStyles = makeStyles((theme) => ({
 			<ReplyDialog />
 			<FormControl>
 				<FormControlLabel
-					value="start"
+					value="switch"
 					control={<Switch color="primary" />}
-					label={inboxState==0?"发件箱":"收件箱"}
+					label={state.inboxState==0?"发件箱":"收件箱"}
 					labelPlacement="end"
 					className={classes.switchStyle}
 					onClick={handleSwitch}
