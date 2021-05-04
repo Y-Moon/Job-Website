@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
+import request from 'src/components/Request';
+import getCookie from 'src/components/CookieUntils';
 import {
   Box,
   Button,
@@ -12,29 +14,48 @@ import {
   TextField,
   makeStyles
 } from '@material-ui/core';
+import { useNavigate } from 'react-router-dom';
+import { replace } from 'formik';
 
-const useStyles = makeStyles(() => ({
-  root: {}
-}));
-
+  const useStyles = makeStyles(() => ({
+    root: {
+  	  
+    },
+  }));
+  let username=getCookie(document.cookie,'userName');
 const ProfileDetails = ({ className, ...rest }) => {
   const classes = useStyles();
+  const navigate=useNavigate();
+  const [state, setState] = useState(0);
   const [values, setValues] = useState({
-    firstName: 'firstName',
-    lastName: 'lastName',
-    email: 'email@devias.io',
+    companyName: '',
+    country: '',
     phone: '',
-    state: 'Alabama',
-    country: '中国'
+    personName: '',
+	introduce: '',
   });
-
   const handleChange = (event) => {
     setValues({
       ...values,
       [event.target.name]: event.target.value
     });
   };
-
+  function handleClick(){
+  	let url='http://localhost:8010/company/setCompanyRole';
+  	request(url,values,"post").then(resp=>{
+  		console.log(resp.data);
+    });
+    window.history.go(0);
+  }
+  React.useEffect(()=>{
+	 if(state===null||state==0){
+		setState(1);
+		setValues({
+		  ...values,
+		  username: username,
+		})
+	  }
+  })
   return (
     <form
       autoComplete="off"
@@ -49,10 +70,7 @@ const ProfileDetails = ({ className, ...rest }) => {
         />
         <Divider />
         <CardContent>
-          <Grid
-            container
-            spacing={3}
-          >
+          <Grid spacing={3} container >
             <Grid
               item
               md={6}
@@ -60,15 +78,27 @@ const ProfileDetails = ({ className, ...rest }) => {
             >
               <TextField
                 fullWidth
-                helperText="Please specify the first name"
-                label="姓"
-                name="firstName"
+                label="公司名"
+                name="companyName"
                 onChange={handleChange}
-                required
-                value={values.firstName}
+                value={values.companyName}
                 variant="outlined"
               />
             </Grid>
+			<Grid
+			  item
+			  md={6}
+			  xs={12}
+			>
+			  <TextField
+			    fullWidth
+			    label="国家"
+			    name="country"
+			    onChange={handleChange}
+			    value={values.country}
+			    variant="outlined"
+			  />
+			</Grid>
             <Grid
               item
               md={6}
@@ -76,26 +106,10 @@ const ProfileDetails = ({ className, ...rest }) => {
             >
               <TextField
                 fullWidth
-                label="名"
-                name="lastName"
+                label="责任人名"
+                name="personName"
                 onChange={handleChange}
-                required
-                value={values.lastName}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="邮箱"
-                name="email"
-                onChange={handleChange}
-                required
-                value={values.email}
+                value={values.personName}
                 variant="outlined"
               />
             </Grid>
@@ -116,24 +130,6 @@ const ProfileDetails = ({ className, ...rest }) => {
             </Grid>
             <Grid
               item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Country"
-                name="country"
-                onChange={handleChange}
-                required
-                value={values.country}
-                variant="outlined"
-              />
-			  
-			 
-            </Grid>
-			
-            <Grid
-              item
               md={12}
               xs={12}
             >
@@ -142,7 +138,6 @@ const ProfileDetails = ({ className, ...rest }) => {
 			  label="企业介绍"
 			  name="introduce"
 			  onChange={handleChange}
-			  required
 			  multiline
 			  rows={5}
 			  variant="outlined"
@@ -159,6 +154,7 @@ const ProfileDetails = ({ className, ...rest }) => {
           <Button
             color="primary"
             variant="contained"
+			onClick={handleClick}
           >
             保存更改
           </Button>

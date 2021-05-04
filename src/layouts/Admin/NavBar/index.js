@@ -37,6 +37,16 @@ const items = [
     title: '企业资质证书审查'
   },
   {
+    href: '/admin/companyBlank',
+    icon: AlertCircleIcon,
+    title: '用户黑名单'
+  },
+  {
+    href: '/admin/userBlank',
+    icon: AlertCircleIcon,
+    title: '企业黑名单'
+  },
+  {
     href: '/',
     icon: AlertCircleIcon,
     title: '退出'

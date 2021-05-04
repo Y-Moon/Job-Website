@@ -45,7 +45,7 @@ const SchoolView=()=>{
 	return(
 		<Page
 			className={classes.root}
-			title='school'
+			title='校园招聘'
 			>
 			<TopFrame onClick={(category)=>handleClick(category)}/>
 			<Box mb={10}>

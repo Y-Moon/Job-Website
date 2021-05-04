@@ -43,9 +43,6 @@ const useStyles = makeStyles((theme) => ({
 		color:"#4b4b4b"
 	}
 	}))
-const handleClick=()=>{
-	console.log("s");
-}
 export default function PageCard(props) {
   const classes = useStyles();
   const { jobId,jobName, salary,experience,education,jobKey,pic,website,companyName, benefits,...other } = props.data;
@@ -57,7 +54,6 @@ export default function PageCard(props) {
 				<Link
 				  component={RouterLink}
 				  to={url}
-				  onClick={handleClick}
 				  color='inherit'
 				  variant="h6"
 				>

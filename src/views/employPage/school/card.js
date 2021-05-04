@@ -6,6 +6,8 @@ import CardContent from '@material-ui/core/CardContent';
 import Chip from '@material-ui/core/Chip';
 import Divider from '@material-ui/core/Divider';
 import Avatar from '@material-ui/core/Avatar';
+import Link from '@material-ui/core/Link';
+import { Link as RouterLink} from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
 	company_pic:{
@@ -43,12 +45,20 @@ const useStyles = makeStyles((theme) => ({
 	}))
 export default function PageCard(props) {
   const classes = useStyles();
-  const { jobName, salary,experience,education,jobKey,pic,website,companyName, benefits,...other } = props.data;
+  const { jobId,jobName, salary,experience,education,jobKey,pic,website,companyName, benefits,...other } = props.data;
+  let url='/findJob/jobView?id='+jobId;
   function CardOne() {
     return (
     <Card className={classes.card_stype}>
 			<Typography className={classes.typography_title} noWrap >
-				{jobName}
+				<Link
+				  component={RouterLink}
+				  to={url}
+				  color='inherit'
+				  variant="h6"
+				>
+				  {jobName}
+				</Link>
 			</Typography >
 			 <Typography  className={classes.typography_money}>
 			 	{salary}

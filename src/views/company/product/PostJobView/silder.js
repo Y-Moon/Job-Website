@@ -2,15 +2,16 @@ import React, { useState } from 'react';
 import {
 	makeStyles,
 	Slider,
-	Typography
+	Box,
 } from '@material-ui/core';
 const useStyles = makeStyles((theme) => ({
   root: {
 	marginTop:theme.spacing(3),
+	
   },
   slider:{
 	  width:300,
-	  
+	  marginLeft:theme.spacing(1),
   }
 }));
 
@@ -33,12 +34,10 @@ const  MySlider=(props)=>{
 		props.getvalue(newValue);
 	  };
 	return(
-		<div
-		className={classes.root}
-		>
-			<Typography id="range-slider"  gutterBottom>
-			  经验要求:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			</Typography>
+		<Box className={classes.root} >
+			<Box fontSize='h5.fontSize' fontWeight='fontWeightBold' mb={1}>
+			  经验要求:
+			</Box>
 			<Slider
 			  className={classes.slider}
 			  value={value}
@@ -50,7 +49,7 @@ const  MySlider=(props)=>{
 			  getAriaValueText={valuetext}
 			  max={props.max}
 			/>
-		</div>
+		</Box>
 	);
 };
 export default MySlider;

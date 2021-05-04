@@ -59,32 +59,37 @@ TabPanel.propTypes = {
 const HotView = () => {
 	const classes = useStyles();
 	const [state,setState]=React.useState({"cardJson":[],"value":0});
+	const [pageNumber,setPageNumber]=React.useState(1);
 	let topvalue=0;
 	let url='http://localhost:8010/employPage/hotList';
+	function handlePage(e,number){
+		setPageNumber(number);
+	}
 	const handleChange = (event, newValue) => {
 	    topvalue=newValue; 
-		console.log(topvalue);
-		requestService(newValue);
+		// console.log(topvalue);
+		let req={"hot":topvalue};
+		requestService(req);
 	  };
-	const requestService=(data)=>{
-	  let req={"hot":topvalue};
+	const requestService=(req)=>{
 	  axios.get(url,{params:req}).then(r => {
 		let cardJson=r.data;
 		setState({"cardJson":cardJson,"value":topvalue});
-		console.log(state);
+		// console.log(state);
 	  },e=>{
 		console.log(e);
 	  });
 	};
 	React.useEffect(()=>{
 		if(state.cardJson.length==0||state==null){
-			requestService(0);
+			let req={"hot":topvalue};
+			requestService(req);
 		}
 	})
   return (
     <Page
       className={classes.root}
-      title='hot job'
+      title='热门招聘'
     >
 	  <TopBar 
 		handleChange={handleChange}
@@ -96,7 +101,7 @@ const HotView = () => {
           container
           spacing={3}
       	>
-			{state.cardJson.map((s,i)=>(
+			{state.cardJson.slice(12*pageNumber-12,12*pageNumber).map((s,i)=>(
 				<Grid
 				  item
 				  lg={4}
@@ -112,7 +117,12 @@ const HotView = () => {
 			))}
         </Grid>
       </TabPanel>
-       <Pagination count={10} className={classes.paginationStyle}>
+       <Pagination 
+			count={Math.ceil(state.cardJson.length/12)} 
+			className={classes.paginationStyle}
+			onChange={handlePage}
+			page={pageNumber}
+			>
        </Pagination>
     </Page>
   );

@@ -51,9 +51,7 @@ const ProductCard = ({ className, product, delcard,...rest }) => {
 	  	className={classes.button}
 		onClick={handleDelete}
 	  	>
-	  	<CloseIcon
-			fontSize='small'
-			/>
+	  	<CloseIcon fontSize='small' />
 	  </Fab >
       <CardContent>
         <Box
@@ -104,7 +102,7 @@ const ProductCard = ({ className, product, delcard,...rest }) => {
               display="inline"
               variant="body2"
             >
-              Updated 2hr ago
+              {product.date}
             </Typography>
           </Grid>
           <Grid
@@ -120,9 +118,9 @@ const ProductCard = ({ className, product, delcard,...rest }) => {
               display="inline"
               variant="body2"
             >
-			  浏览
+			      浏览
               {product.see}
-              次
+            次
             </Typography>
           </Grid>
         </Grid>

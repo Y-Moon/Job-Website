@@ -9,9 +9,6 @@ import {
 const TopBar=(props)=>{
 	const [state,setState]=React.useState(0);
 	//bar变化function
-	const handleChange=(event,newState)=>{
-		setState(newState);
-	}
 	return (
 	<Box>
 		<Tabs 

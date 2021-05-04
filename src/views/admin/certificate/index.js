@@ -6,7 +6,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 import Page from 'src/components/Page';
-import Results from './Results';
+import PublicTable from './publicTable';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,13 +29,6 @@ const CustomerListView = () => {
 	  		  console.log(error);
 	  });
   }
-  React.useEffect(()=>{
-	  console.log("effect is run...");
-	  if(candidate[0].id==-1){
-		requestDate();
-	  }
-  }
-  );
   return (
     <Page
       className={classes.root}
@@ -43,7 +36,7 @@ const CustomerListView = () => {
     >
       <Container maxWidth={false}>
         <Box mt={3}>
-          <Results customers={candidate} />
+          <PublicTable  />
         </Box>
       </Container>
     </Page>

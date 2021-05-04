@@ -13,11 +13,17 @@ import {
   TextField,
   Typography,
   makeStyles,
-  Snackbar
+  Snackbar,
+  FormControl,
+  FormLabel,
+  RadioGroup,
+  FormControlLabel,
+  Radio
 } from '@material-ui/core';
 import GoogleIcon from 'src/icons/Google';
 import MuiAlert from '@material-ui/lab/Alert';
 import Page from 'src/components/Page';
+import { Code } from '_react-feather@2.0.9@react-feather';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,48 +37,60 @@ const useStyles = makeStyles((theme) => ({
 const LoginView = () => {
   const classes = useStyles();
   const navigate = useNavigate();
-  const [state, setState] = React.useState({"data":"","code":"","open":false});
+  const [state, setState] = React.useState({ "data": "", "code": "", "open": false });
   function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
   }
-  const handleClick = (data,code) => {
-	let param={"data":data,"code":code,"open":true}
+  const handleClick = (data, code) => {
+    let param = { "data": data, "code": code, "open": true }
     setState(param);
   };
 
   const handleClose = (event, reason) => {
-    setState({"data":"","code":"info","open":false});
+    setState({ "data": "", "code": "info", "open": false });
   };
   const verifyAC = (data) => {
-	  // console.log(data);
-	  // document.cookie.clearAsync;
-	  document.cookie ="userName="+"";
-	  console.log(document.cookie);
-	  axios.get('http://localhost:8010/login/verify',{params:data}).then(resp=>{
-		  console.log(resp.data);
-		  let code=resp.data;
-		  if(code==1){
-			handleClick("用户身份登陆成功！","success");
-			document.cookie ="userName="+data.email;
-			setTimeout(()=>navigate('/findJob', { replace: true }),1000);
-		  }else if(code==2){
-			  handleClick("企业身份登陆成功！","success");
-			  document.cookie ="userName="+data.email;
-			  setTimeout(()=>navigate('/company', { replace: true }),1000);
-		  }else if(code==3){
-			  handleClick("管理员身份登陆成功！","success");
-			  document.cookie ="userName="+data.email;
-			  setTimeout(()=>navigate('/admin', { replace: true }),1000);
-		  }else{
-			  handleClick("登陆失败，账号密码错误！！","warning");
-			  // setTimeout(()=>navigate('/', { replace: true }),1000);
-		  }
-	  },error=>{
-		  handleClick("请求失败！！","error");
-		  // setTimeout(()=>navigate('/', { replace: true }),1000);
-	  }
-	  )
-	  console.log(document.cookie);
+    console.log(data);
+    axios.defaults.withCredentials = true;
+    axios.get('http://localhost:8010/login/verify', { params: data }).then(resp => {
+      // console.log(resp.data);
+      let resultMessage = resp.data;
+      // console.log(resultMessage)
+      let message = resultMessage.message;
+      console.log(resultMessage);
+      let url = "/";
+      let result = "success";
+      if(resultMessage.state==1){
+        result = "success";
+        switch(data.status){
+          case 'user':{
+            url = "/findJob";
+            break;
+          }
+          case 'company':{
+            url= '/company';
+            break;
+          }
+          case 'admin':{
+            url= '/admin';
+            break;
+          }
+          default:{
+            url= '/';
+            break;
+          }
+        }
+      }else{
+        result = "error";
+      }
+      // console.log(message);
+      handleClick(message, result);
+      setTimeout(() => navigate(url, { replace: true }), 1000);
+    }, error => {
+      handleClick("请求失败！！", "error");
+    }
+    )
+    console.log(document.cookie);
   }
   return (
     <Page
@@ -89,17 +107,18 @@ const LoginView = () => {
           <Formik
             initialValues={{
               email: '123@163.com',
-              password: '123456'
+              password: '123456',
+              status: 'user'
             }}
             validationSchema={Yup.object().shape({
-              email: Yup.string().email('必须是一个邮箱').max(255).required('Email is required'),
-              password: Yup.string().max(255).required('Password is required')
+              email: Yup.string().email('必须是一个邮箱').max(255).required('需要使用邮箱登录'),
+              password: Yup.string().max(255).required('需要输入密码')
             })}
-            onSubmit={(values,credentials) => {
-				setTimeout(() => {
-				     credentials.setSubmitting(false);
-				   }, 100);
-			  verifyAC(values);
+            onSubmit={(values, credentials) => {
+              setTimeout(() => {
+                credentials.setSubmitting(false);
+              }, 100);
+              verifyAC(values);
             }}
           >
             {({
@@ -114,49 +133,63 @@ const LoginView = () => {
               <form onSubmit={handleSubmit}>
                 <Box mb={3}>
                   <Typography
+                    align="center"
                     color="textPrimary"
                     variant="h2"
                   >
                     登录
                   </Typography>
-                  <Typography
-                    color="textSecondary"
-                    gutterBottom
-                    variant="body2"
-                  >
-                    将根据账号权限不同跳转不同界面
-                  </Typography>
                 </Box>
-                <Box
-                  mt={3}
-                  mb={1}
-                >
-                  <Typography
-                    align="center"
+                <Typography
+                    align="left"
                     color="textSecondary"
                     variant="body1"
                   >
-                    用邮箱登录
+                    选择登录身份
                   </Typography>
-                </Box>
+                <FormControl component="fieldset">
+                  <RadioGroup 
+                    row aria-label="position" 
+                    name="status" 
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.status}
+                    >
+                    <FormControlLabel
+                      value="user"
+                      control={<Radio color="primary" />}
+                      label="用户"
+                    />
+                    <FormControlLabel
+                      value="company"
+                      control={<Radio color="primary" />}
+                      label="企业"
+                    />
+                    <FormControlLabel 
+                      value="admin" 
+                      control={<Radio color="primary" />} 
+                      label="管理员" 
+                    />
+                  </RadioGroup>
+                </FormControl>
                 <TextField
-                  error={Boolean(touched.email && errors.email)}
                   fullWidth
-                  helperText={touched.email && errors.email}
-                  label="Email Address"
+                  label="邮箱"
                   margin="normal"
+                  type="email"
+                  variant="outlined"
                   name="email"
+                  error={Boolean(touched.email && errors.email)}
+                  helperText={touched.email && errors.email}
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  type="email"
                   value={values.email}
-                  variant="outlined"
                 />
                 <TextField
                   error={Boolean(touched.password && errors.password)}
                   fullWidth
                   helperText={touched.password && errors.password}
-                  label="Password"
+                  label="密码"
                   margin="normal"
                   name="password"
                   onBlur={handleBlur}
@@ -174,36 +207,36 @@ const LoginView = () => {
                     xs={12}
                     md={12}
                   >
-				  <Box my={2}>
-                    <Button
-                      color="primary"
-                      disabled={isSubmitting}
-                      fullWidth
-                      size="large"
-                      type="submit"
-                      variant="contained"
-                    >
-                      登录
-                    </Button>
-					<Snackbar 
-						open={state.open}
-						autoHideDuration={1000} 
-						onClose={handleClose}
-						>
-					        <Alert onClose={handleClose} severity={state.code}>
-					          {state.data}
-					        </Alert>
-				    </Snackbar>
-						
-					</Box>
+                    <Box my={2}>
+                      <Button
+                        color="primary"
+                        disabled={isSubmitting}
+                        fullWidth
+                        size="large"
+                        type="submit"
+                        variant="contained"
+                      >
+                        登录
+                  </Button>
+
+                      <Snackbar
+                        open={state.open}
+                        autoHideDuration={1000}
+                        onClose={handleClose}
+                      >
+                        <Alert onClose={handleClose} severity={state.code}>
+                          {state.data}
+                        </Alert>
+                      </Snackbar>
+                    </Box>
                   </Grid>
-                  
+
                 </Grid>
                 <Typography
                   color="textSecondary"
                   variant="body1"
                 >
-                 没有账号?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  没有账号?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   {' '}
                   <Link
                     component={RouterLink}
@@ -214,11 +247,11 @@ const LoginView = () => {
                   </Link>
 				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				  <Link
-				    component={RouterLink}
-				    to="/companyRegister"
-				    variant="h6"
-				  >
-				   企业注册
+                component={RouterLink}
+                to="/companyRegister"
+                variant="h6"
+              >
+                企业注册
 				  </Link>
                 </Typography>
               </form>

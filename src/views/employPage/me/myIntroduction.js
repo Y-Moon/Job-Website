@@ -11,6 +11,7 @@ import LockIcon from '@material-ui/icons/Lock';
 
 const useStyles = makeStyles((theme) => ({
 	root:{
+		wdith:'700px',
 		paddingLeft :50,
 	},
 }));
@@ -22,7 +23,6 @@ const MyIntroduction=()=>{
 	console.log(username);
 	const url='http://localhost:8010/employPage/mine/recruit';
 	const onConfirm=(e)=>{
-		console.log(uploadFile.current.files[0]);
 		let formData=new FormData();
 		formData.append("username",username);
 		formData.append("file",uploadFile.current.files[0]);
@@ -35,9 +35,9 @@ const MyIntroduction=()=>{
 	return (
 		<Box className={classes.root}>
 			<form>
-			  <label>
+			  <Box fontSize='h5.fontSize'>
 			    简历:
-			  </label>
+			  </Box>
 			  <Box mt={2}>
 			  </Box>
 			  <Button

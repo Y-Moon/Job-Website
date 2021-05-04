@@ -10,6 +10,7 @@ import {
   Container,
   FormHelperText,
   Link,
+  MenuItem,
   TextField,
   Typography,
   makeStyles
@@ -21,31 +22,45 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.dark,
     paddingBottom: theme.spacing(3),
     paddingTop: theme.spacing(3)
+  },
+  selectBox: {
+    minWidth:'130px',
+    width: 'auto',
+    marginRight: '30px'
   }
 }));
 
 const RegisterView = () => {
-  const classes = useStyles();
   const navigate = useNavigate();
-  const uploadFile=React.useRef();
+  const classes = useStyles();
+  const dd=['北京','上海','深圳','广州','杭州','成都','南京','武汉','厦门','长沙','苏州','天津','其他'];
+  const rz=['未融资','天使轮','A轮','B轮','C轮','D轮及以上','上市公司','不需要融资'];
+  const gm=['少于15人', '15-50人', '50-150人', '150-500人', '500-2000人', '2000人以上'];
+  const ly=['移动互联网', '电商', '金融', '企业服务', '教育', '文娱|内容', '游戏', '消费生活', '硬件'];
   let url='http://localhost:8010/register/companyRole/create';
   const sendForm=(values)=>{
 	  let formdata=new FormData();
 	  formdata.append("companyName",values.companyName);
+	  formdata.append("name",values.corporation);
 	  formdata.append("phone",values.phone);
 	  formdata.append("address",values.address);
-	  formdata.append("email",values.email);
+	  formdata.append("userName",values.email);
 	  formdata.append("password",values.password);
+	  formdata.append("companyCode",values.companyCode);
+	  formdata.append("dd",values.dd);
+	  formdata.append("rz",values.rz);
+	  formdata.append("gm",values.gm);
+	  formdata.append("ly",values.ly);
 	  // let ss={"companyName":values.companyName,"phone":values.phone,"address":values.address,
 	  // "email":values.email,"password":values.password,"upload":values.upload,"policy":values.policy};
 	  // formdata.append("registerCompany",ss);
-	  formdata.append("upload",uploadFile.current.files[0]);
 	  console.log(formdata);
 	  axios.post(url,formdata).then(resp=>{
-	  						  console.log(resp.data);
+                  console.log(resp.data);
+                  navigate('/', { replace: true });
 	  					  },error=>{
 	  						  console.log(error);
-	  					  });
+                });
   }
   return (
     <Page
@@ -61,13 +76,18 @@ const RegisterView = () => {
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              companyName: '123',
-              corporation: '123',
-              phone: '1234',
-              address: '123',
+              companyName: 'xxx股份有限公司',
+              corporation: '张三',
+              phone: '15327768830',
+              address: '江西-南昌',
               email: '110@163.com',
-              password: '123123123',
-              policy: false
+              password: '',
+              companyCode: '',
+              dd:'',
+              rz:'',
+              gm:'',
+              ly:'',
+              policy: false,
             }}
             validationSchema={
               Yup.object().shape({
@@ -77,16 +97,21 @@ const RegisterView = () => {
                 address: Yup.string().max(255).required('地址必填'),
                 email: Yup.string().email('必须是一个邮箱').max(255).required('邮箱必填'),
                 password: Yup.string().min(8,"密码长度必须大于8位,不能太短").max(255).required('密码必填'),
-                policy: Yup.boolean().oneOf([true], '必须阅读服务条款')
+                companyCode: Yup.string().min(4,"机构码长度必须大于4位").max(255).required('机构码作为认证必填'),
+                dd: Yup.string().required('需要选择公司地点'),
+                rz: Yup.string().required('需要选择融资情况'),
+                gm: Yup.string().required('需要选择公司规模'),
+                ly: Yup.string().required('需要选择行业领域'),
+                policy: Yup.boolean().oneOf([true], '必须阅读服务条款'),
               })
             }
             onSubmit={(values,credentials) => {
-				console.log(values);
-				setTimeout(() => {
-				     credentials.setSubmitting(false);
-				   }, 100);
-				sendForm(values);
-              // navigate('/app/dashboard', { replace: true });
+                console.log(values);
+                setTimeout(() => {
+                    credentials.setSubmitting(false);
+                  }, 100);
+                sendForm(values);
+              
             }}
           >
             {({
@@ -138,30 +163,30 @@ const RegisterView = () => {
                   value={values.corporation}
                   variant="outlined"
                 />
-				<TextField
-				  error={Boolean(touched.phone && errors.phone)}
-				  fullWidth
-				  helperText={touched.phone && errors.phone}
-				  label="企业联系方式"
-				  margin="normal"
-				  name="phone"
-				  onBlur={handleBlur}
-				  onChange={handleChange}
-				  value={values.phone}
-				  variant="outlined"
-				/>
-				<TextField
-				  error={Boolean(touched.address && errors.address)}
-				  fullWidth
-				  helperText={touched.address && errors.address}
-				  label="企业地址"
-				  margin="normal"
-				  name="address"
-				  onBlur={handleBlur}
-				  onChange={handleChange}
-				  value={values.address}
-				  variant="outlined"
-				/>
+                <TextField
+                  error={Boolean(touched.phone && errors.phone)}
+                  fullWidth
+                  helperText={touched.phone && errors.phone}
+                  label="企业联系方式"
+                  margin="normal"
+                  name="phone"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.phone}
+                  variant="outlined"
+                />
+                <TextField
+                  error={Boolean(touched.address && errors.address)}
+                  fullWidth
+                  helperText={touched.address && errors.address}
+                  label="企业地址"
+                  margin="normal"
+                  name="address"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.address}
+                  variant="outlined"
+                />
                 <TextField
                   error={Boolean(touched.email && errors.email)}
                   fullWidth
@@ -187,23 +212,100 @@ const RegisterView = () => {
                   type="password"
                   value={values.password}
                   variant="outlined"
-                />
-				<Box my={2}>
-				  <Button
-				    fullWidth
-				    color="primary"
-				    size="large"
-				    type="submit"
-				    variant="outlined"
-					component="label"
-				  >
-				    上传企业资质证书
-					<input ref={uploadFile}
-					  name="upload" 
-					  type="file" 
-					  hidden/>
-				  </Button>
-				</Box>
+                />  
+                <TextField
+                  fullWidth
+                  error={Boolean(touched.companyCode && errors.companyCode)}
+                  helperText={touched.companyCode && errors.companyCode}
+                  label="机构代码证编号"
+                  margin="normal"
+                  name="companyCode"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="password"
+                  value={values.companyCode}
+                  variant="outlined">
+                </TextField>
+                <TextField
+                  select
+                  error={Boolean(touched.dd && errors.dd)}
+                  helperText={touched.dd && errors.dd}
+                  className={classes.selectBox}
+                  id="dd"
+                  label="公司地点"
+                  margin="normal"
+                  name='dd'
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.dd}
+                  variant="outlined"
+                >
+                  {dd.map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </TextField>
+                <TextField
+                  select
+                  error={Boolean(touched.rz && errors.rz)}
+                  helperText={touched.rz && errors.rz}
+                  className={classes.selectBox}
+                  id="rz"
+                  label="融资阶段"
+                  margin="normal"
+                  name='rz'
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.rz}
+                  variant="outlined"
+                >
+                  {rz.map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </TextField>
+                <TextField
+                  select
+                  error={Boolean(touched.gm && errors.gm)}
+                  helperText={touched.gm && errors.gm}
+                  className={classes.selectBox}
+                  id="gm"
+                  label="公司规模"
+                  margin="normal"
+                  name='gm'
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.gm}
+                  variant="outlined"
+                >
+                  {gm.map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </TextField>
+                <TextField
+                  select
+                  error={Boolean(touched.ly && errors.ly)}
+                  helperText={touched.ly && errors.ly}
+                  className={classes.selectBox}
+                  id="ly"
+                  label="行业领域"
+                  margin="normal"
+                  name='ly'
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.ly}
+                  variant="outlined"
+                >
+                  {ly.map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </TextField>
                 <Box
                   alignItems="center"
                   display="flex"
@@ -245,7 +347,7 @@ const RegisterView = () => {
                     type="submit"
                     variant="contained"
                   >
-                    登录
+                    注册
                   </Button>
                 </Box>
                 <Typography

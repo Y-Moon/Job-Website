@@ -30,22 +30,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function PageCard(props, cardRef) {
+function PageCard(props) {
   const classes = useStyles();
-  let [state, setstate] = useState([]);
-  // console.log("子组件刷新");
-  useImperativeHandle(cardRef, () => ({
-    handleJson: (cardList) => {
-      console.log('测试测试');
-      setstate(cardList);
-    }
-  }));
-  console.log(state);
-
   function CardOne(props) {
 	const { pic, cname, introduce,comments,job,handle,test, ...other } = props;
-	console.log(pic);
-	console.log(props);
+	// console.log(pic);
+	// console.log(props);
     return (
       <Card className={classes.card_stype}>
         <CardContent>
@@ -78,13 +68,13 @@ function PageCard(props, cardRef) {
   }
 
   return (
-    <div className={classes.root} ref={cardRef}>
+    <div className={classes.root}>
       <Grid
         container
         spacing={2}
       >
         {
-          state.map((companyObj, index) => (
+          props.cardMessage==null?null:props.cardMessage.map((companyObj, index) => (
             <Grid
               item
               key={index}
@@ -105,5 +95,4 @@ function PageCard(props, cardRef) {
   );
 }
 
-export default forwardRef(PageCard);
-// export default  PageCard;
+export default  PageCard;

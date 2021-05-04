@@ -1,5 +1,8 @@
 import React from 'react';
+import axios from 'axios';
 import PropTypes from 'prop-types';
+import getCookie from 'src/components/CookieUntils';
+import request from 'src/components/Request';
 import clsx from 'clsx';
 import moment from 'moment';
 import {
@@ -29,10 +32,50 @@ const useStyles = makeStyles(() => ({
     width: 100
   }
 }));
-
 const Profile = ({ className, ...rest }) => {
   const classes = useStyles();
-
+  const [state,setState]=React.useState(0);
+  const [companyEntity,setCompanyEntity]=React.useState({
+	"companyName":"",
+	"address":"",
+	"date":"",
+	"picture":""
+  });
+  const picButton=React.useRef();
+  let username=getCookie(document.cookie,"userName");
+  function handleSubmitPic(e){
+	  console.log(e.target.files[0]);
+	  let file=e.target.files[0];
+	  let name=file.name
+	  if(file!=null||"undefined" == typeof file){
+		  if(name!=null||"undefined" == typeof name){
+			  console.log(name);
+			  let extName=name.substring(name.lastIndexOf(".")+1,name.length).toLowerCase();
+			  console.log(extName);
+			  if(extName=='jpg'||extName=='png'){
+				  let url="http://localhost:8010/company/setPic"
+				  let formData=new FormData();
+				  formData.append("companyName",username);
+				  formData.append("file",file);
+				  request(url,formData,"post").then(resp=>{
+					  console.log(resp.data);
+				  })
+			  }
+		  }
+	  }
+  }
+  
+  React.useEffect(()=>{
+	  if(state===null||state==0){
+		  setState(1);
+		  console.log(username);
+		  let url="http://localhost:8010/company/getCompanyRole";
+		  request(url,{"username":username},"get").then(resp=>{
+			  console.log(resp.data);
+			  setCompanyEntity(resp.data);
+		  })
+	  }
+  })
   return (
     <Card
       className={clsx(classes.root, className)}
@@ -46,27 +89,27 @@ const Profile = ({ className, ...rest }) => {
         >
           <Avatar
             className={classes.avatar}
-            src={user.avatar}
+            src={"http://localhost:8010/images/company/"+companyEntity.picture}
           />
           <Typography
             color="textPrimary"
             gutterBottom
             variant="h3"
           >
-            {user.name}
+            {companyEntity.companyName}
           </Typography>
           <Typography
             color="textSecondary"
             variant="body1"
           >
-            {`${user.city} ${user.country}`}
+            {companyEntity.address}
           </Typography>
           <Typography
             className={classes.dateText}
             color="textSecondary"
             variant="body1"
           >
-            {`${moment().format('hh:mm A')} ${user.timezone}`}
+            {`${companyEntity.date}`}
           </Typography>
         </Box>
       </CardContent>
@@ -78,8 +121,8 @@ const Profile = ({ className, ...rest }) => {
           variant="text"
 		  component="label"
         >
-		 上传照片
-		 <input type="file" name="name" hidden/>
+			上传照片
+		 <input type="file" name="name" onChange={handleSubmitPic} hidden/>
         </Button>
       </CardActions>
     </Card>

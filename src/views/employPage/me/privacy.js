@@ -13,9 +13,9 @@ import {
 
 const useStyles = makeStyles((theme) => ({
 	root:{
-		width:"81vh",
+		width:"700px",
 		paddingLeft :50,
-		marginLeft:"10vh",
+		marginLeft:"0",
 	},
 	gray_font: {
 	  fontSize: 14,
@@ -29,7 +29,7 @@ const MyselfView=()=>{
 	const classes = useStyles();
 	return (
 		<Box className={classes.root}>
-			<Box  display="inline" >
+			<Box fontSize='h4.fontSize' display="inline" >
 				隐私设置
 			</Box>
 			<Box  display="inline">
@@ -44,7 +44,7 @@ const MyselfView=()=>{
 			<Typography className={classes.gray_font} >
 				隐藏后，您的简历将不会推荐给HR，也无法被搜索到，只有你投递到公司才可以查看你的简历
 			</Typography>
-			<Box  mt={5} mb={1}>
+			<Box fontSize='h4.fontSize' mt={5} mb={1}>
 				匿名展示
 			</Box >
 			<Typography  className={classes.gray_font} >

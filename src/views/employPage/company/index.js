@@ -1,13 +1,11 @@
 import React, { useState, useRef } from 'react';
-import axios from 'axios';
 import Page from 'src/components/Page';
+import request from 'src/components/Request';
 import {
   makeStyles,
-  Typography,
   Box
 } from '@material-ui/core';
 import PageCard from './card';
-import { NavLink } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,21 +33,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CompanyView = () => {
-  let childRef = useRef();
   const classes = useStyles();
-  const [state, setState] = useState([]);
-  let paramKeys = ['dd', 'rz', 'gm', 'ly'];
-  let params = {};
-  console.log('父组件');
-  paramKeys.forEach(i => params[i] = 1);
-  let lastIdMap = {};
+  const [cardData, setCardData] = useState();
+  const [topbar, setTopbar] = useState();
+  const companyKey=["dd","rz","gm","ly"];
   let url='http://localhost:8010/employPage/companyList';
-  let initJson = [];
-  Object.assign(lastIdMap, params);
   let headData = [
     {
       title: '公司地点：', // dd
-      items: ['全国', '北京', '上海', '深圳', '广州', '杭州', '成都', '南京', '武汉', '西安', '厦门', '长沙', '苏州', '天津']
+      items: ['全国', '北京', '上海', '深圳', '广州', '杭州', '成都', '南京', '武汉', '西安', '厦门', '长沙', '苏州', '天津','其他']
     }, {
       title: '融资阶段：', // rz
       items: ['不限', '未融资', '天使轮', 'A轮', 'B轮', 'C轮', 'D轮及以上', '上市公司', '不需要融资']
@@ -61,67 +53,60 @@ const CompanyView = () => {
       items: ['不限', '移动互联网', '电商', '金融', '企业服务', '教育', '文娱|内容', '游戏', '消费生活', '硬件']
     }
   ];
-  let setParams = (param) => {
-    // if (param) {
-    let k = param['k'];
-    params[k] = param['v'];
-    // }
-    // let res = '';
-    // paramKeys.forEach(i => res += `${i}=${params[i]}&`);
-    // return res.slice(0, -1);
-  };
-  const requestService=(params)=>{
-	  axios.get(url,{params:params}).then(r => {
-	  	let cardJson=r.data;
-	  	childRef.current.handleJson(cardJson);
-		setState(cardJson);
-	  	// console.log(state);
-	  },e=>{
-	  	console.log(e);
-	  });
-  };
   React.useEffect(()=>{
-	if(state.length==0||state==null){
-		requestService()
-	}
+    if(cardData==null){
+      request(url,{'dd': 1,'rz':1,'gm':1,'ly':1},'get').then(resp=>{
+        // console.log(resp.data);
+        setCardData(resp.data);
+        if(topbar==null){
+          let elements={'dd':document.getElementById('dd,1')
+                        ,'rz':document.getElementById('rz,1')
+                        ,'gm':document.getElementById('gm,1')
+                        ,'ly':document.getElementById('ly,1')}
+          setTopbar({"elements":elements,"topState":{'dd':1,'rz':1,'gm':1,'ly':1}});
+          // console.log(elements);
+        }
+      })
+    }
   });
   const handleClick = (e) => {
-    let target = e.target;
-    let data = target.getAttribute('data');
-    if (target.tagName !== 'A' || !data) return;
-    data = data.split('-');
-    let k = data[0];
-    let id = data[1];
-    // console.log(childRef);
-    let siblings = target.parentNode.children;
-	
-    siblings[lastIdMap[k]].classList.remove(classes.tabItemActive);
-    target.classList.add(classes.tabItemActive);
-    lastIdMap[k] = id;
-    setParams({ k, v: id });
-	console.log(params);
-    // console.log(params);
-    requestService(params);
+    const focus=e.target;
+    let data=focus.getAttribute('data');
+    data=data.split(',');
+    topbar.elements[data[0]].classList.remove(classes.tabItemActive);
+    focus.classList.add(classes.tabItemActive);
+    setTopbar({"elements":{...topbar.elements,[data[0]]:focus},
+                "topState":{...topbar.topState,[data[0]]:Number(data[1])}
+              });
+    // console.log(topbar.topState);
+    request(url,topbar.topState,'get').then(resp=>{
+      console.log(resp.data);
+    });
   };
   return (
     <Page
       className={classes.root}
       title='company list'
-      onClick={handleClick.bind(this)}
     >
       <Box className={classes.topStyle}>
         {headData.map((i, idx) => (
-          <div key={idx} className={classes.tabItemContainer}>
+          <div key={idx} className={classes.tabItemContainer} >
             <b>{i.title}&nbsp;</b>
-            {i.items.map((i, idx2) => <a
-              className={[classes.tabItem, idx2 === 0 ? classes.tabItemActive : null].join(' ')}
-              data={paramKeys[idx] + '-' + (idx2 + 1)}
-              key={idx2}>{i}</a>)}
+            {i.items.map((i, idx2) => 
+              <a
+                onClick={handleClick}
+                className={[classes.tabItem, idx2 === 0 ? classes.tabItemActive : null].join(' ')}
+                key={idx2}
+                data={[companyKey[idx],idx2+1]}
+                id={[companyKey[idx],idx2+1]}
+                >
+                  {i}
+              </a>)}
           </div>
         ))}
       </Box>
       <Box mt={5}>
-        <PageCard cardList={initJson} ref={childRef} />
+        <PageCard cardMessage={cardData} />
       </Box>
     </Page>);
 };

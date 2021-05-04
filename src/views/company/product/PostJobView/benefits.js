@@ -2,25 +2,28 @@ import React, { useState } from 'react';
 import {
 	makeStyles,
 	TextField,
-	Typography,
 	Box,
 	InputLabel,
 	InputAdornment,
 } from '@material-ui/core';
+//本地引入
+import CardView from './card';
 //普通样式表
 const useStyles = makeStyles((theme) => ({
   root: {
 	marginTop:theme.spacing(3),
   },
   textField:{
-	  width:130,
-	  marginRight:theme.spacing(2),
+	  width:170,
+	  marginTop:theme.spacing(1),
+	  marginRight:theme.spacing(10),
+	  marginBottom:theme.spacing(1),
   }
 }));
 //按钮样式定义
 let benefits=["","","","",""];
 let salary=[0,0];
-const  BenefitsView=(props)=>{
+const  Content=(props)=>{
 	const classes = useStyles();
 	const handleChange=(e)=>{
 		let element=e.target;
@@ -48,9 +51,9 @@ const  BenefitsView=(props)=>{
 		<div
 		className={classes.root}
 		>
-			<Typography gutterBottom>
+			<Box fontSize='h5.fontSize' fontWeight='fontWeightBold' mb={1}>
 				福利待遇(可以为空):
-			</Typography>
+			</Box>
 			<form onChange={handleChange}>
 				<TextField id="bkey1" label="福利1"  className={classes.textField} />
 				<TextField id="bkey2" label="福利2"  className={classes.textField} />
@@ -60,9 +63,9 @@ const  BenefitsView=(props)=>{
 			</form>
 				<Box mb={3}>
 				</Box>
-				<Typography gutterBottom>
+				<Box fontSize='h5.fontSize' fontWeight='fontWeightBold' mb={5}>
 					薪资:
-				</Typography>
+				</Box>
 			<form onChange={handleSalary}>
 				<TextField
 					  label="start"
@@ -89,5 +92,14 @@ const  BenefitsView=(props)=>{
 			</form>
 		</div>
 	);
-};
+}
+const BenefitsView=(props)=>{
+	
+	return(
+		<CardView 
+			title='福利待遇'
+			content={<Content getValue={props.getValue}/>}
+		/>
+	)
+}
 export default BenefitsView;

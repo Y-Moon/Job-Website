@@ -26,7 +26,6 @@ const SettingsView = () => {
       title="企业账户设置"
     >
       <Container maxWidth="lg">
-        <Notifications />
         <Box mt={3}>
           <Password />
         </Box>

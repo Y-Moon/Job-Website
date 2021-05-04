@@ -2,29 +2,21 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Page from 'src/components/Page';
 //本地引入
-import Slider from './silder';
-import SelectView from './select';
+import ConditionView from './condition';
+import JobCategoryView from './jobCategory';
 import BenefitsView from './benefits';
-import DialogView from './dialog';
 import JobIntroduceView from './jobIntroduce';
+import getCookie from 'src/components/CookieUntils';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 //material组件
 import {
 	makeStyles,
 	Button,
-	TextField,
 	Box,
 	Container,
-	Typography,
-	Card,
-	CardHeader,
-	CardContent,
-	Divider,
-	
 } from '@material-ui/core';
 
 //按钮样式定义
-
 const useStyles = makeStyles((theme) => ({
   root: {
     textAlign:"center",
@@ -47,47 +39,45 @@ const useStyles = makeStyles((theme) => ({
 	  paddingTop:'20px',
 	  
   },
-  textField1:{
-	  marginTop:15,
-  }
 }));
+let initData={
+	jobName:"",
+	introduce:"",
+	jobCondition:"",
+	experience:"0-0年",
+	education:"不限",
+	isSchool: 0,
+	address:"全国各地",
+	category:"1-1",
+	jobKey:[],
+	benefits:[],
+	salary:"0k-0k",
+}
 const  PostJobView=()=>{
 	const classes = useStyles();
-	let test=React.useRef();
+	const companyName=getCookie(document.cookie,'userName');
 	let url='http://127.0.0.1:8010/company/addCard';
-	let experience=[0,0];
-	let category="1-1";
-	let jobKey=["","","","",""];
-	let benefits=["","","","",""];
-	let salary="0-0";
 	const handleSubmit=()=>{
-		console.log("提交");
-		let jobName=document.getElementById("jobName").value;
-		let introduce=document.getElementById("introduce").value;
-		let jobCondition=document.getElementById("jobCondition").value;
-		let formdata=new FormData();
-		jobKey=arrayToString(jobKey);
-		benefits=arrayToString(benefits);
-		// console.log(jobName);
-		// console.log(introduce);
-		// console.log(jobCondition);
-		// console.log(experience);
-		// console.log(category);
-		// console.log(jobKey);
-		// console.log(benefits);
-		// console.log(salary);
-		formdata.append('jobName',jobName);
-		formdata.append('introduce',introduce);
-		formdata.append('jobCondition',jobCondition);
-		formdata.append('experience',experience);
-		formdata.append('category',category);
-		formdata.append('jobKey',jobKey);
-		formdata.append('benefits',benefits);
-		formdata.append('salary',salary);
-		postSubmit(formdata);
+		
+		// let formdata=new FormData();
+		initData.jobKey=arrayToString(initData.jobKey);
+		initData.benefits=arrayToString(initData.benefits);
+		// let keys=Object.keys(initData);
+		// console.log(keys);
+		// for(let s in keys){
+		// 	console.log(keys[s]);
+		// 	console.log(initData[keys[s]]);
+		// 	formdata.append(keys[s],initData[keys[s]]);
+		// }
+		console.log(initData);
+		postSubmit(initData);
 	}
 	const arrayToString=(array)=>{
 		let str="";
+
+		if(array==null){
+			return str;
+		}
 		for(let i=0;i<array.length;i++){
 			if(array[i]!=""){
 				if(str==""||str==null){
@@ -99,10 +89,20 @@ const  PostJobView=()=>{
 		}
 		return str;
 	}
-	const postSubmit=(formdata)=>{
-		if(formdata.get("jobName")!=null){
-			axios.post(url,formdata).then(resp=>{
+	const postSubmit=(initjson)=>{
+		console.log("提交");
+		initjson={...initjson,username:companyName}
+		console.log(initjson);
+		// let postData={"jobEntity":initjson,"username": companyName};
+		if(initjson["jobName"]!=null&&initjson["jobName"]!=""){
+			axios.post(url,initjson).then(resp=>{
 				let data=resp.data;
+				if(data==1){
+					console.log('添加成功');
+					window.history.go(-1);
+				}else{
+					console.log('添加失败,请重试');
+				}
 				console.log(data);
 			},error=>{
 				console.log(error);
@@ -110,73 +110,68 @@ const  PostJobView=()=>{
 		}
 		
 	}
+	const handleIntroduce=(jName,jIntroduce,condition)=>{
+		if(jName!=null){
+			console.log(jName);
+			initData.jobName=jName;
+		}
+		if(jIntroduce!=null){
+			console.log(jIntroduce);
+			initData.introduce=jIntroduce;
+		}
+		if(condition!=null){
+			console.log(condition);
+			initData.jobCondition=condition;
+		}
+	}
 	const handleCategory=(c,j)=>{
 		if(c!=null){
 			console.log(c);
-			category=c;
+			initData.category=c;
 		}
 		if(j!=null){
 			console.log(j);
-			jobKey=j;
+			initData.jobKey=j;
 		}
 	}
 	const handleBenefit=(benefitKey,s)=>{
 		if(benefitKey!=null){
 			console.log(benefitKey);
-			benefits=benefitKey;
+			initData.benefits=benefitKey;
 		}
 		if(s!=null){
 			console.log(s);
-			salary=s;
+			initData.salary=s[0]+'k'+'-'+s[1]+'k';
 		}
 	}
-	const handleSilder=(silder)=>{
-		experience=silder;
+	const handleCondition=(e,s,exp,add)=>{
+		if(e!=null){
+			console.log(e);
+			initData.education=e;
+		}else if(s!=null){
+			console.log(s);
+			initData.isSchool=s;
+		}else if(exp!=null){
+			console.log(exp);
+			initData.experience=exp[0]+'-'+exp[1]+'年';
+		}else if(add!=null){
+			console.log(add);
+			initData.address=add;
+		}
 	}
 	return(
 		<Page
 			className={classes.root}
 			title="发布招聘信息"
 			>
-		<DialogView refs={test}/>
 		
 		<Container
 		   className={classes.container}
 			>
-				<Slider
-				  max={10}
-				  label="年"
-				  getvalue={handleSilder}
-				/>
-				<JobIntroduceView />
-				<Card
-				  className={classes.card}
-				>
-				  <CardHeader
-				    className={classes.header}
-				    title="岗位版块"
-				  />
-				  <Divider variant="middle"/>
-				  <CardContent
-					className={classes.content}
-				    >
-					<SelectView getValue={handleCategory}/>
-			      </CardContent>
-				</Card>
-				<Card
-				  className={classes.card}
-				  >
-				  <CardHeader
-				    className={classes.header}
-				    title="福利待遇"
-				  />
-				  <Divider variant="middle"/>
-				  <CardContent
-					className={classes.content}
-				  >
-					<BenefitsView getValue={handleBenefit}/>
-				  </CardContent>
-				</Card>
+				<JobIntroduceView getValue={handleIntroduce} />
+				<ConditionView getValue={handleCondition}/>
+				<JobCategoryView getValue={handleCategory} />
+				<BenefitsView getValue={handleBenefit}/>
 				<Box mt={5} textAlign='center'>
 					<Button 
 					  variant="outlined" 

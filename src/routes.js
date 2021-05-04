@@ -20,6 +20,8 @@ import MyMessageView from 'src/views/employPage/me';
 import InboxView from 'src/views/employPage/inbox';
 import SchoolView from 'src/views/employPage/school';
 import CertificateView from 'src/views/admin/certificate';
+import UserBlankView from 'src/views/admin/blankList/company';
+import CompanyBlankView from 'src/views/admin/blankList/user';
 import Download from 'src/layouts/FindJob/download';
 import JobView from 'src/components/Job';
 
@@ -58,6 +60,8 @@ const routes = [
     element: <AdminLayout />,
     children: [
       { path: 'certificate', element: <CertificateView /> },
+      { path: 'userBlank', element: <UserBlankView /> },
+      { path: 'companyBlank', element: <CompanyBlankView /> },
       { path: '/', element: <Navigate to="/admin/certificate" /> },
   	  { path: '*', element: <Navigate to="/404" /> }
     ]

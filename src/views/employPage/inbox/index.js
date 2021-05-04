@@ -1,14 +1,25 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Accordion from '@material-ui/core/Accordion';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import Typography from '@material-ui/core/Typography';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import {
+	Button,
+	Container,
+	FormControl,
+	FormControlLabel,
+	Switch,
+	Box
+	} from '@material-ui/core';
+
 import Page from 'src/components/Page';
+//本地引入
+import InBoxTable from './inboxtable';
+import ReplyDialog from './replyDialog';
+import request from 'src/components/Request'
+import getCookie from 'src/components/CookieUntils'
+
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%',
+    width: '95%',
+	maxWidth: '95%',
 	minHeight: '100%',
   },
   heading: {
@@ -19,87 +30,109 @@ const useStyles = makeStyles((theme) => ({
   secondaryHeading: {
     fontSize: theme.typography.pxToRem(15),
     color: theme.palette.text.secondary,
+	flexBasis: '60%',
+	flexShrink: 0,
   },
+  content:{
+	  flexBasis: '90%',
+	  flexShrink: 0,
+  },
+  TopButton:{
+	  margin:15,
+  },
+  switchStyle:{
+	  marginTop:'15px',
+	  marginLeft:'20px',
+  }
 }));
 
  function InboxView() {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
-
-  const handleChange = (panel) => (event, isExpanded) => {
-    setExpanded(isExpanded ? panel : false);
-  };
-
+  const delUrl='http://localhost:8010/public/delEmail';
+  const getUrl='http://localhost:8010/public/getEmail';
+  let username=getCookie(document.cookie,'userName');
+  const [checkedBox,setCheckedBox]=React.useState([]);
+  const [inboxState,setInboxState]=React.useState();
+  let mailMessages=checkedBox.slice();
+  global.mailState=new Array(mailMessages.length).fill(0);
+  const [state,setState]=React.useState({state:0,inboxState:0});
+  function handleDel(){
+	  let delId=[];
+	  for(let index=0;index<mailState.length;){
+		  if(mailState[index]==1){
+			let removeMail=mailMessages.splice(index,1);
+			mailState.splice(index,1);
+			console.log(removeMail);
+			delId.push(removeMail[0].id)
+		  }else{
+			  ++index;
+		  }
+	  }
+	  console.log(mailMessages);
+	  console.log(delId);
+	  mailState=new Array(mailMessages.length).fill(0);
+	  let formData=new FormData();
+	  formData.append('ids',delId);
+	  setCheckedBox(mailMessages);
+	  request(delUrl,formData,'post');
+  }
+  function handleSwitch(){
+	setInboxState((inboxState+1)%2);
+	handleRequest(inboxState);
+	console.log(state);
+	console.log(inboxState);
+	
+  }
+  function handleRequest(state){
+	let params={"username":username,"state":state};
+	request(getUrl,params,'get').then(resp=>{
+		console.log(resp.data);
+		let data=resp.data;
+		setCheckedBox(data);
+	})
+  }
+  function handleChange(e){
+	  let id=Number(e.target.id);
+	  // console.log(id);
+	  mailState[id]=(mailState[id]+1)%2;
+	  console.log(mailState);
+  }
+  React.useEffect(()=>{
+	  if(state.state==0){
+		  setState({...state,state:1});
+		  let param={"username": username,"state":0}
+		  request(getUrl,param,'get').then(resp=>{
+			  setCheckedBox(resp.data);
+			  console.log(resp.data);
+		  })
+	  }
+  })
   return (
-    <Page 
-	title="inbox"
-	 className={classes.root}>
-      <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1bh-content"
-          id="panel1bh-header"
-        >
-          <Typography className={classes.heading}>阿里集团</Typography>
-          <Typography className={classes.secondaryHeading}>关于您的一面通知</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            您通过了我们的面试
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2bh-content"
-          id="panel2bh-header"
-        >
-          <Typography className={classes.heading}>字节跳动</Typography>
-          <Typography className={classes.secondaryHeading}>
-            关于您的最终面试通知
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            您通过了面试,请在2021-5-20日到杭州字节跳动分公司报道
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel3bh-content"
-          id="panel3bh-header"
-        >
-          <Typography className={classes.heading}>百度</Typography>
-          <Typography className={classes.secondaryHeading}>
-            关于二面通知
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            很抱歉不合格,期待你找到称心的公司
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel4bh-content"
-          id="panel4bh-header"
-        >
-          <Typography className={classes.heading}>腾讯</Typography>
-		  <Typography className={classes.secondaryHeading}>
-		   期待您加入我们公司,在这里给你我们的内推链接
-		  </Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            https://www.baidu.com
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
+    <Page title="inbox" className={classes.root}>
+		<Container>
+			<Button 
+				variant="outlined" 
+				onClick={handleDel} 
+				className={classes.TopButton}
+			>
+				删除
+			</Button>
+			<ReplyDialog />
+			<FormControl>
+				<FormControlLabel
+					value="start"
+					control={<Switch color="primary" />}
+					label={inboxState==0?"发件箱":"收件箱"}
+					labelPlacement="end"
+					className={classes.switchStyle}
+					onClick={handleSwitch}
+				/>
+			</FormControl>
+			<InBoxTable 
+				tabValue={mailMessages} 
+				onChange={handleChange} 
+			/>
+		</Container>
     </Page>
   );
 }

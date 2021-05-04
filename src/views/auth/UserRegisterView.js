@@ -28,15 +28,23 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     paddingBottom: theme.spacing(3),
     paddingTop: theme.spacing(3)
+  },
+  verifyCode:{
+    width:'200px',
+  },
+  verifyCodeButton:{
+    marginTop:15,
+    marginLeft: 30,
+    height:55,
   }
 }));
 
 const RegisterView = () => {
   const classes = useStyles();
   const navigate = useNavigate();
+  const emailRef=React.useRef();
   const [state, setState] = React.useState({"data":"","code":"info","open":false});
   let url='http://localhost:8010/register/userRole/create';
-  
   const handleClick = (data,code) => {
   	let param={"data":data,"code":code,"open":true}
     setState(param);
@@ -44,13 +52,16 @@ const RegisterView = () => {
   const handleClose = (event, reason) => {
 	  setState({"data":"","code":"info","open":false});
   };
-  
+  const handleVerfyCode=()=>{
+    let email=emailRef.current.getElementsByTagName('input')[0].value;
+    console.log(email);
+  }
   const verifyAC = (data) => {
   	  // console.log(data);
   	  axios.get(url,{params:data}).then(resp=>{
   		  console.log(resp.data);
   		  let data=resp.data;
-		  if(data=="1"){
+		  if(data.state=="1"){
 			  console.log("注册成功！");
 			  handleClick("注册成功！！","success");
 			  setTimeout(()=>navigate('/', { replace: true }),1000);
@@ -83,6 +94,7 @@ const RegisterView = () => {
               name: '',
               email: '',
               password: '',
+              VerificationCode: '',
               policy: false
             }}
             validationSchema={
@@ -90,6 +102,7 @@ const RegisterView = () => {
                 name: Yup.string().max(255).required('名字必须填！！'),
                 email: Yup.string().email('必须是合法邮箱！！').max(255).required('必须填写邮件！！'),
                 password: Yup.string().max(255).required('必须填写密码！！'),
+                VerificationCode: Yup.string().min(6,"验证码为6位数").max(6,"验证码为6位数").required('必须填写验证码！！'),
                 policy: Yup.boolean().oneOf([true], '请仔细阅读服务条款')
               })
             }
@@ -126,7 +139,7 @@ const RegisterView = () => {
                   error={Boolean(touched.name && errors.name)}
                   fullWidth
                   helperText={touched.name && errors.name}
-                  label="name"
+                  label="昵称"
                   margin="normal"
                   name="name"
                   onBlur={handleBlur}
@@ -138,7 +151,7 @@ const RegisterView = () => {
                   error={Boolean(touched.email && errors.email)}
                   fullWidth
                   helperText={touched.email && errors.email}
-                  label="Email Address"
+                  label="邮箱地址"
                   margin="normal"
                   name="email"
                   onBlur={handleBlur}
@@ -146,12 +159,13 @@ const RegisterView = () => {
                   type="email"
                   value={values.email}
                   variant="outlined"
+                  ref={emailRef}
                 />
                 <TextField
                   error={Boolean(touched.password && errors.password)}
                   fullWidth
                   helperText={touched.password && errors.password}
-                  label="Password"
+                  label="密码"
                   margin="normal"
                   name="password"
                   onBlur={handleBlur}
@@ -160,6 +174,28 @@ const RegisterView = () => {
                   value={values.password}
                   variant="outlined"
                 />
+                <TextField
+                  error={Boolean(touched.VerificationCode && errors.VerificationCode)}
+                  helperText={touched.VerificationCode && errors.VerificationCode}
+                  label="验证码"
+                  margin="normal"
+                  name="VerificationCode"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.VerificationCode}
+                  variant="outlined"
+                  className={classes.verifyCode}
+                />
+                <Button
+                 color="primary"
+                 disabled={isSubmitting}
+                 size="large"
+                 variant="outlined"
+                 className={classes.verifyCodeButton}
+                 onClick={handleVerfyCode}
+                 >
+                   请求验证码
+                </Button>
                 <Box
                   alignItems="center"
                   display="flex"
@@ -201,7 +237,7 @@ const RegisterView = () => {
                     type="submit"
                     variant="contained"
                   >
-                    登录
+                    注册
                   </Button>
                 </Box>
                 <Typography
@@ -218,15 +254,15 @@ const RegisterView = () => {
                     登录
                   </Link>
                 </Typography>
-				<Snackbar
-					open={state.open}
-					autoHideDuration={1000} 
-					onClose={handleClose}
-					>
-				        <Alert onClose={handleClose} severity={state.code}>
-				          {state.data}
-				        </Alert>
-				</Snackbar>
+                <Snackbar
+                  open={state.open}
+                  autoHideDuration={1000} 
+                  onClose={handleClose}
+                  >
+                    <Alert onClose={handleClose} severity={state.code}>
+                      {state.data}
+                    </Alert>
+                </Snackbar>
               </form>
             )}
           </Formik>

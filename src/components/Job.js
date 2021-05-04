@@ -3,21 +3,22 @@ import axios from 'axios';
 import {
 	makeStyles,
 	Box,
-	Typography,
 	Container,
 	Button,
 	Chip
 	}from '@material-ui/core';
 //本地引入
 import Page from './Page';
+import request from './Request';
+import getCookie from './CookieUntils';
 const useStyles = makeStyles((theme)=>({
 	root:{
 		minHeight: '100%',
-		marginBottom:'20vh',
+		marginBottom:'200px',
 	},
 	top:{
 		background:"#f7f7f7",
-		height:"25vh",
+		height:"250px",
 		width:"100vw",
 		padding:"25px",
 		marginBottom:20,
@@ -35,7 +36,7 @@ const Content=(props)=>{
 		<Container>
 			<Box 
 				fontSize='h4.fontSize'
-				mt={5}
+				mt={4}
 				fontWeight="fontWeightBold"
 				>
 				{props.title}
@@ -69,13 +70,13 @@ const JobView=(props)=>{
 	console.log(param);
 	let [state,setState]=React.useState(0);
 	let [data,setData]=React.useState(initData);
-	let username=document.cookie;
-	// console.log(username);
-	username=username.split("=")[1];
+	let username=getCookie(document.cookie,'userName');
+	let idJson={'id':param};
 	let url='http://localhost:8010/employPage/jobAll';
 	let clickurl='http://localhost:8010/employPage/submit';
+	let seeurl='http://localhost:8010/employPage/see';
 	const initRequest=()=>{
-		axios.get(url,{params:{'id':param}}).then(resp=>{
+		axios.get(url,{params:idJson}).then(resp=>{
 			console.log(resp.data);
 			if(resp.data!=null){
 				setData(resp.data);
@@ -110,6 +111,10 @@ const JobView=(props)=>{
 	}
 	React.useEffect(()=>{
 		if(state==0||state==null){
+			request(seeurl,idJson,'get').then(resp=>{
+				let data=resp.data;
+				console.log(data);
+			})
 			setState(1);
 			initRequest();
 		}
@@ -117,22 +122,26 @@ const JobView=(props)=>{
 	return(
 		<Page className={classes.root}>
 			<Container  className={classes.top}>
-				<Box 
-					fontSize="h5.fontSize" 
-					>
-					{data.companyName}
-				</Box>
 				<Box  
 					fontSize="h1.fontSize" lineHeight={2}
+					ml={3}
 					>
 					{data.jobName}
 				</Box>
 				<Box 
-					fontSize="h3.fontSize"
+					fontSize="h5.fontSize" lineHeight={2}
+					ml={3}
+					>
+					{data.companyName}
+				</Box>
+				
+				<Box 
+					fontSize="h3.fontSize" lineHeight={2}
+					ml={3}
 					>
 					{data.salary+"/"+data.address+"/"+data.experience+"/"+data.experience}
 				</Box>
-				<Box mt={2}>
+				<Box mt={2} ml={3}>
 					{
 						data.jobKey.split('-').map((c,i)=>(
 							<Chip
