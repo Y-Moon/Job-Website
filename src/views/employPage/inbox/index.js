@@ -79,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
 	let inboxStateSlice={...state,inboxState:(state.inboxState+1)%2};
 	console.log(inboxStateSlice);
 	setState(inboxStateSlice);
-	handleRequest(state.inboxState);
+	handleRequest(inboxStateSlice.inboxState);
 	console.log(state);
 	
   }

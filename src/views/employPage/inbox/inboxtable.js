@@ -32,8 +32,9 @@ export default function InBoxTable(props) {
 		      aria-label="Acknowledge"
 		      onClick={(event) => event.stopPropagation()}
 		      onFocus={(event) => event.stopPropagation()}
-		      control={<Checkbox id={index+""}  />}
-		      label={emailValue.recipient+":"}
+		      control={<Checkbox id={index+""} />}
+		      label={emailValue.recipientName==null||emailValue.recipientName==''?
+			  		emailValue.recipient+":":emailValue.recipientName+":"}
 		    />
 			<Box component="span" mt={1.5} ml={5}>
 				{emailValue.title}

@@ -29,7 +29,7 @@ const ProfileDetails = ({ className, ...rest }) => {
   const [state, setState] = useState(0);
   const [values, setValues] = useState({
     companyName: '',
-    country: '',
+    address: '',
     phone: '',
     personName: '',
 	introduce: '',
@@ -92,10 +92,10 @@ const ProfileDetails = ({ className, ...rest }) => {
 			>
 			  <TextField
 			    fullWidth
-			    label="国家"
-			    name="country"
+			    label="地址"
+			    name="address"
 			    onChange={handleChange}
-			    value={values.country}
+			    value={values.address}
 			    variant="outlined"
 			  />
 			</Grid>
@@ -154,7 +154,7 @@ const ProfileDetails = ({ className, ...rest }) => {
           <Button
             color="primary"
             variant="contained"
-			onClick={handleClick}
+			      onClick={handleClick}
           >
             保存更改
           </Button>
